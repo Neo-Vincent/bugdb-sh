@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.oracle.bugdb" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>bugdba</name>
+    <description>
+        A sample Oracle JavaScript Extension Toolkit (JET) mobile app based on Cordova
+    </description>
+    <author email="undefined" href="undefined">
+        Oracle Jet Team
+    </author>
+    <content src="index.html" />
+    <preference name="loadUrlTimeoutValue" value="700000" />
+    <allow-navigation href="http://10.0.2.2/*" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <hook src="scripts/hooks/jetAfterPrepare.js" type="after_prepare" />
+    <allow-intent href="market:*" />
+    <icon height="36" src="res/icon/android/icon-ldpi.png" width="36" />
+    <icon height="48" src="res/icon/android/icon-mdpi.png" width="48" />
+    <icon height="72" src="res/icon/android/icon-hdpi.png" width="72" />
+    <icon height="96" src="res/icon/android/icon-xhdpi.png" width="96" />
+    <icon height="144" src="res/icon/android/icon-xxhdpi.png" width="144" />
+    <icon height="192" src="res/icon/android/icon-xxxhdpi.png" width="192" />
+    <splash density="land-ldpi" src="res/screen/android/splash-land-ldpi.9.png" />
+    <splash density="land-mdpi" src="res/screen/android/splash-land-mdpi.9.png" />
+    <splash density="land-hdpi" src="res/screen/android/splash-land-hdpi.9.png" />
+    <splash density="land-xhdpi" src="res/screen/android/splash-land-xhdpi.9.png" />
+    <splash density="land-xxhdpi" src="res/screen/android/splash-land-xxhdpi.9.png" />
+    <splash density="land-xxxhdpi" src="res/screen/android/splash-land-xxxhdpi.9.png" />
+    <splash density="port-hdpi" src="res/screen/android/splash-port-hdpi.9.png" />
+    <splash density="port-ldpi" src="res/screen/android/splash-port-ldpi.9.png" />
+    <splash density="port-mdpi" src="res/screen/android/splash-port-mdpi.9.png" />
+    <splash density="port-xhdpi" src="res/screen/android/splash-port-xhdpi.9.png" />
+    <splash density="port-xxhdpi" src="res/screen/android/splash-port-xxhdpi.9.png" />
+    <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.9.png" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="DisallowOverscroll" value="true" />
+</widget>
