@@ -6,22 +6,35 @@
  * Your dashboard ViewModel code goes here
  */
 
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojknockout', 'promise', 'ojs/ojlistview', 'ojs/ojcollectiontabledatasource', 'ojs/ojmodel'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojknockout', 'promise', 'ojs/ojlistview', 'ojs/ojcollectiontabledatasource', 'ojs/ojmodel','ojs/ojselectcombobox'],
  function(oj, ko, $, app) {
   
     function HomeViewModel() {
       var self = this;
       self.username="User";
       // Header Config
-      self.headerConfig = {'viewName': 'home_header',
+
+      self.headerConfig = {'viewName': 'homeHeader',
           'viewModelFactory': {
               createViewModel: function(params, valueAccessor) {
               var model =  {
                 pageTitle: "Home",
                 handleBindingsApplied: function(info) {
-                  app.adjustContentPadding();
+                    app.adjustContentPadding();
                 },
-                userName:self.username
+                previousValue:null,
+                updateEventHandler : function (context, ui) {
+                          var valueObj = {
+                            previousValue: this.previousValue,
+                            value: ui.value
+                          };
+                          previousValue = ui.value;
+
+                          $('#updateEvent').html("<u>Update Event:</u>");
+                          $('#update-changelog').html("Value Change: " + JSON.stringify(valueObj, null, 4));
+                          $('#update-changeTrigger').html("Value Change Trigger: " + ui.optionMetadata.trigger);
+                          $('#update-eventTime').html("Last event fired at: " + eventTime);
+                        },
               };
               return Promise.resolve(model);
             }
@@ -29,6 +42,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojknockout', 'p
       
 
       self.handleActivated = function(params) {
+
       };
 
       self.handleAttached = function(info) {
@@ -137,7 +151,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojknockout', 'p
               var selectedIdsArray = $.map(ui.items, function(selectedListItem) {
                   return selectedListItem.id;
               });
-              console.log(selectedIdsArray);
               app.router.store(selectedIdsArray[0]);
               app.router.go("bugView");
           }

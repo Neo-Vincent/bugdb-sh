@@ -1,0 +1,10 @@
+<div class="oj-flex-bar-start"  data-bind="text: pageTitle"> </div>
+<div class="oj-flex-bar-end oj-sm-align-items-center ">
+    <form >
+        <input id="inputSearch"
+               data-bind="ojComponent: {
+    component: 'ojInputSearch',
+    update: updateEventHandler,
+    rootAttributes: {style:'max-width:20em'}}"/>
+    </form>
+</div>

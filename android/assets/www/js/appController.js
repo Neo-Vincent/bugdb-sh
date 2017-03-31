@@ -79,7 +79,6 @@ define(['ojs/ojcore', 'ojs/ojrouter', 'ojs/ojarraytabledatasource', 'ojs/ojmodul
         var topElem = document.getElementsByClassName('oj-applayout-fixed-top')[0];
         var contentElem = document.getElementsByClassName('oj-applayout-content')[0];
         var bottomElem = document.getElementsByClassName('oj-applayout-fixed-bottom')[0];
-
         if (topElem) {
           contentElem.style.paddingTop = topElem.offsetHeight+'px';
         }
