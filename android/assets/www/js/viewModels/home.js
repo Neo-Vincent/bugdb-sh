@@ -5,77 +5,146 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController'],
+
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojknockout', 'promise', 'ojs/ojlistview', 'ojs/ojcollectiontabledatasource', 'ojs/ojmodel'],
  function(oj, ko, $, app) {
   
-    function DashboardViewModel() {
+    function HomeViewModel() {
       var self = this;
-
+      self.username="User";
       // Header Config
-      self.headerConfig = {'viewName': 'header', 'viewModelFactory': app.getHeaderModel()};
+      self.headerConfig = {'viewName': 'home_header',
+          'viewModelFactory': {
+              createViewModel: function(params, valueAccessor) {
+              var model =  {
+                pageTitle: "Home",
+                handleBindingsApplied: function(info) {
+                  app.adjustContentPadding();
+                },
+                userName:self.username
+              };
+              return Promise.resolve(model);
+            }
+          }};
       
-      // Below are a subset of the ViewModel methods invoked by the ojModule binding
-      // Please reference the ojModule jsDoc for additionaly available methods.
 
-      /**
-       * Optional ViewModel method invoked when this ViewModel is about to be
-       * used for the View transition.  The application can put data fetch logic
-       * here that can return a Promise which will delay the handleAttached function
-       * call below until the Promise is resolved.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @return {Promise|undefined} - If the callback returns a Promise, the next phase (attaching DOM) will be delayed until
-       * the promise is resolved
-       */
-      self.handleActivated = function(info) {
-        // Implement if needed
+      self.handleActivated = function(params) {
       };
 
-      /**
-       * Optional ViewModel method invoked after the View is inserted into the
-       * document DOM.  The application can put logic that requires the DOM being
-       * attached here.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
-       */
       self.handleAttached = function(info) {
         // Implement if needed
       };
 
-
-      /**
-       * Optional ViewModel method invoked after the bindings are applied on this View. 
-       * If the current View is retrieved from cache, the bindings will not be re-applied
-       * and this callback will not be invoked.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       */
       self.handleBindingsApplied = function(info) {
-        // Implement if needed
+
       };
 
-      /*
-       * Optional ViewModel method invoked after the View is removed from the
-       * document DOM.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
-       */
+      self.data= [
+                  {
+                      "filed_by": "Oracle Retail",
+                      "assigned":"Neo",
+                      "bug_type":"Bug",
+                      "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                      "created_at": "2015-03-04 2:40am",
+                      "bug_num":2400001,
+                      "status":80,
+                      "updated_at": "2015-03-04 2:40am"
+                  },
+                {
+                    "filed_by": "Oracle Retail",
+                    "assigned":"Neo",
+                    "bug_type":"Bug",
+                    "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                    "created_at": "2015-03-04 2:40am",
+                    "bug_num":2400001,
+                    "status":80,
+                    "updated_at": "2015-03-04 2:40am"
+                },
+                {
+                    "filed_by": "Oracle Retail",
+                    "assigned":"Neo",
+                    "bug_type":"Bug",
+                    "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                    "created_at": "2015-03-04 2:40am",
+                    "bug_num":2400001,
+                    "status":80,
+                    "updated_at": "2015-03-04 2:40am"
+                },
+                {
+                    "filed_by": "Oracle Retail",
+                    "assigned":"Neo",
+                    "bug_type":"Bug",
+                    "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                    "created_at": "2015-03-04 2:40am",
+                    "bug_num":2400001,
+                    "status":80,
+                    "updated_at": "2015-03-04 2:40am"
+                },
+              {
+                  "filed_by": "Oracle Retail",
+                  "assigned":"Neo",
+                  "bug_type":"Bug",
+                  "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                  "created_at": "2015-03-04 2:40am",
+                  "bug_num":2400001,
+                  "status":80,
+                  "updated_at": "2015-03-04 2:40am"
+              },
+            {
+                "filed_by": "Oracle Retail",
+                "assigned":"Neo",
+                "bug_type":"Bug",
+                "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                "created_at": "2015-03-04 2:40am",
+                "bug_num":2400001,
+                "status":80,
+                "updated_at": "2015-03-04 2:40am"
+            },
+            {
+                "filed_by": "Oracle Retail",
+                "assigned":"Neo",
+                "bug_type":"Bug",
+                "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                "created_at": "2015-03-04 2:40am",
+                "bug_num":2400001,
+                "status":80,
+                "updated_at": "2015-03-04 2:40am"
+            },
+            {
+                "filed_by": "Oracle Retail",
+                "assigned":"Neo",
+                "bug_type":"Bug",
+                "subject": "London's West End set for 3m sq ft of new retail space as area's sales hit 11bn (via @RetailWeek) http://bit.ly/1zXpZHZ  ^SW",
+                "created_at": "2015-03-04 2:40am",
+                "bug_num":2400001,
+                "status":80,
+                "updated_at": "2015-03-04 2:40am"
+            },
+              ];
+
+              self.dataSource= new oj.ArrayTableDataSource(self.data, {idAttribute: "filed_by"});
+
       self.handleDetached = function(info) {
         // Implement if needed
       };
+
+      self.onSelected = function(event, ui)
+      {
+          // Custom logic on selected elements
+          if (ui.option === 'selection')
+          {
+              // Access selected elements via ui.items
+              var selectedIdsArray = $.map(ui.items, function(selectedListItem) {
+                  return selectedListItem.id;
+              });
+              console.log(selectedIdsArray);
+              app.router.store(selectedIdsArray[0]);
+              app.router.go("bugView");
+          }
+      }
+
     }
 
-    /*
-     * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
-     * each time the view is displayed.  Return an instance of the ViewModel if
-     * only one instance of the ViewModel is needed.
-     */
-    return new DashboardViewModel();
+    return new HomeViewModel();
   }
 );

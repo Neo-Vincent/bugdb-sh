@@ -20,7 +20,8 @@ define(['ojs/ojcore', 'ojs/ojrouter', 'ojs/ojarraytabledatasource', 'ojs/ojmodul
        'home': {label: 'Home', isDefault: true},
        'create': {label: 'Create'},
        'search': {label: 'Search'},
-       'mybugdb': {label: 'My BugDB'}
+       'mybugdb': {label: 'MyBugDB'},
+       'bugView':{label:"bugView"}
       });
 
       oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
