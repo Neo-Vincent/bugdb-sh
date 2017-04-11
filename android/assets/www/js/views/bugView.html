@@ -1,4 +1,4 @@
-<div>
+<div id="bugView">
     <div class="oj-applayout-fixed-top">
         <header role="banner" class="oj-hybrid-applayout-header" data-bind="ojModule: headerConfig">
         </header>
@@ -13,13 +13,7 @@
                         <div class="oj-flex-item">
                             <label for="BugNoInput" class="oj-label-nocomp">BugNo:</label>
                         </div>
-                        <div class="oj-flex-item">
-                            <input id="BugNoInput" type="text"
-                                   placeholder="123456"
-                                   style="max-width: 70%"
-                                   class="oj-form-control oj-inputtext-nocomp"
-                                   data-bind="ojComponent: {component: 'ojInputText',
-                                    readOnly: readMode}"/>
+                        <div class="oj-flex-item" id="BugNoInput" data-bind="text:bugNum" >
                         </div>
                         <div class="oj-flex-item">
                             <label for="BugTypeInput" class="oj-label-nocomp">BugType:</label>
@@ -117,11 +111,10 @@
                         <div class="oj-flex-item">
                             <input id="Component" type="text"
                                    placeholder="IAP"
-                                   style="max-width: 70%"
+                                   style="max-width: 70%;"
                                    class="oj-form-control oj-inputtext-nocomp"
                                    data-bind="ojComponent: {component: 'ojInputText',
                                     readOnly: readMode}"/>
-                                   data-bind="
                         </div>
                     </div>
                     <div class="oj-flex">
@@ -173,9 +166,8 @@
                                    placeholder=""
                                    style="max-width: 70%"
                                    class="oj-form-control oj-inputtext-nocomp"
-                                   data-bind="
-                       attr: {
-                           readOnly: readMode}"/>
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode}"/>
                         </div>
                     </div>
                     <div class="oj-flex">
@@ -187,9 +179,8 @@
                                    placeholder=""
                                    style="max-width: 70%"
                                    class="oj-form-control oj-inputtext-nocomp"
-                                   data-bind="
-                       attr: {
-                           readOnly: readMode}"/>
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode}"/>
                         </div>
                     </div>
                     <div class="oj-flex">
@@ -201,9 +192,8 @@
                                    placeholder=""
                                    style="max-width: 70%"
                                    class="oj-form-control oj-inputtext-nocomp"
-                                   data-bind="
-                       attr: {
-                           readOnly: readMode}"/>
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode}"/>
                         </div>
                     </div>
                     <div class="oj-flex">
@@ -215,9 +205,8 @@
                                    placeholder=""
                                    style="max-width: 70%"
                                    class="oj-form-control oj-inputtext-nocomp"
-                                   data-bind="
-                       attr: {
-                           readOnly: readMode}"/>
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode}"/>
                         </div>
                         <div class="oj-flex-item">
                             <label for="Application" class="oj-label-nocomp">Application:</label>
@@ -227,9 +216,8 @@
                                    placeholder=""
                                    style="max-width: 70%"
                                    class="oj-form-control oj-inputtext-nocomp"
-                                   data-bind="
-                   attr: {
-                       readOnly: readMode}"/>
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode}"/>
                         </div>
                     </div>
                 </div>

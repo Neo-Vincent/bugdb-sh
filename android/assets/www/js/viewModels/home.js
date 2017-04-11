@@ -17,16 +17,32 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             self.dataSource = ko.observable();
             // Header Config
             self.gotoBugView = function(bugNum){
+                console.log(bugNum);
                 $.ajax(
                     {
                         // search bugNum get json data
-                        url: 'searchByNumber.json',
+                        url: 'searchByNumber'+bugNum+'.json',
                         type: 'POST',
                         data: JSON.stringify({"bugNumber":bugNum}),
                         success: function (jsonResponse) {
                             app.router.store(bugNum);
                             app.currentBugRawData=jsonResponse;
-                            app.router.go("bugView");
+                            app.router.go("bugView",{ historyUpdate: 'replace' })
+                            .then(
+                                function(result) {
+                                    if (result.hasChanged) {
+                                        console.log(result);
+                                        console.log(app);
+                                        console.log("Router transitioned to default state.");
+                                    }
+                                    else {
+                                        oj.Logger.info('No transition, Router was already in default state.');
+                                    }
+                                },
+                                function(error) {
+                                    oj.Logger.error('Transition to default state failed: ' + error.message);
+                                }
+                            );
                         }
                     });
             };
@@ -46,6 +62,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                                     value: ui.value
                                 };
                                 previousValue = ui.value;
+                                console.log(previousValue);
                                 self.gotoBugView(previousValue);
                             },
                         };
@@ -84,7 +101,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     "type": instance["type"]["name"],
                     "name": instance["name"],
                     "createDate": instance["createDate"],
-                    "bugNumber": instance["bugNumbeDater"],
+                    "bugNumber": instance["bugNumber"],
                     "status": instance["status"]["id"],
                     "update": instance["lastUpdateDate"]
                 };

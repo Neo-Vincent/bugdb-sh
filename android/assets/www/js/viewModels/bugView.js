@@ -11,11 +11,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
         function BugViewModel() {
             var self = this;
             self.rawData=app.currentBugRawData;
+            self.bugNum=0;
             //if(self.rawData==null) return;
             self.readMode = true;
-            self.editableIds=[];
+            self.editableInputTextIds=["BugTypeInput","assignBy","Assignee","Product","Component",
+            "SubComponent","PatchNumber","Version","Hardware","Middleware","OperatingSystem","Cloud",
+            "Application"];
+            self.editableInputNum=["Status1"];
             self.modeChanged = function(isEditMode){
                 self.readMode = !isEditMode;
+                for(var item in self.editableInputTextIds){
+                    $("#"+self.editableInputTextIds[item]).ojInputText("option","readOnly",self.readMode);
+                }
             };
             // Header Config
             var headerFactory = {
@@ -80,12 +87,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             this.commentValue5 = ko.observable("Sam     22016-1-6 09:00     Reply@Emma");
             oj.Router.sync().then(
                 function () {
-                    self.currentBugNum = app.router.retrieve();
-                    app.router.store(null);
+                    self.bugNum = app.router.retrieve();
+                    self.rawData=app.currentBugRawData;
+                    console.log(self.rawData);
                 }
             );
         }
-
         return new BugViewModel();
     }
 );

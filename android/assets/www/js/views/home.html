@@ -13,12 +13,12 @@
       <div class="oj-hybrid-padding">
 
         <ul id="listview" aria-label="list using collection" style="height:100%"
-            data-bind="ojComponent: {component: 'ojListView', data: dataSource, item: {template: 'tweet_template'}, selectionMode: 'single',optionChange: onSelected, rootAttributes: {style: 'width:100%;overflow-x:hidden'}, scrollPolicy: 'loadMoreOnScroll', scrollPolicyOptions: {fetchSize: 15}}">
+            data-bind="ojComponent: {component: 'ojListView', data: dataSource, item: {template: 'item_template'}, selectionMode: 'single',optionChange: onSelected, rootAttributes: {style: 'width:100%;overflow-x:hidden'}, scrollPolicy: 'loadMoreOnScroll', scrollPolicyOptions: {fetchSize: 15}}">
         </ul>
 
-        <script type="text/html" id="tweet_template">
+        <script type="text/html" id="item_template">
           <li data-bind="attr: {id: bugNumber}">
-            <div class="oj-flex" style="flex-wrap: nowrap">
+            <div class="oj-flex" style="flex-wrap: nowrap" data-bind="attr: {id: bugNumber}">
               <div class="oj-flex-item ">
                 <div class="oj-flex-bar">
                   <div class="oj-flex-bar-start">
