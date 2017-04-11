@@ -17,28 +17,28 @@
         </ul>
 
         <script type="text/html" id="tweet_template">
-          <li data-bind="attr: {id: bug_num}">
+          <li data-bind="attr: {id: bugNumber}">
             <div class="oj-flex" style="flex-wrap: nowrap">
               <div class="oj-flex-item ">
                 <div class="oj-flex-bar">
                   <div class="oj-flex-bar-start">
-                    <div><strong data-bind="text: filed_by"></strong></div>
-                    <div><span style="font-size: 13px; color: #696969; margin-left: 10px;" data-bind="text: created_at"></span></div>
+                    <div><strong data-bind="text: filed"></strong></div>
+                    <div><span style="font-size: 13px; color: #696969; margin-left: 10px;" data-bind="text: createDate"></span></div>
                   </div>
-                  <div id="bug_type" style="color: #696969; margin-left: 10px;" class="oj-flex-bar-middle ">
-                    <div data-bind="text: bug_type"></div>
+                  <div id="type" style="color: #696969; margin-left: 10px;" class="oj-flex-bar-middle ">
+                    <div data-bind="text: type"></div>
                   </div>
                   <div class="oj-flex-bar-end">
                     <strong data-bind="text: assigned"></strong>
                   </div>
                 </div>
                 <div class="demo-tweet">
-                  <span style="word-wrap: break-word" data-bind="text: subject"></span>
+                  <span style="word-wrap: break-word" data-bind="text: name"></span>
                 </div>
                 <div class="oj-flex-bar">
                   <div class="oj-flex-bar-start">
-                    <div data-bind="text:'#'+bug_num"></div>
-                    <div> <span style="font-size: 13px; color: #696969; margin-left: 10px;" data-bind="text:'updated at: '+updated_at"></span></div>
+                    <div data-bind="text:'#'+bugNumber"></div>
+                    <div> <span style="font-size: 13px; color: #696969; margin-left: 10px;" data-bind="text:'updated at: '+update"></span></div>
                   </div>
                   <div class="oj-flex-bar-end">
                     Status:&nbsp;<strong data-bind="text:status"></strong>

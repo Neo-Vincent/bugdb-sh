@@ -17,3 +17,4 @@ android/.idea/
 android/.gradle/
 android/CordovaLib/build/
 *.class
+android/assets/www/.idea/

@@ -7,11 +7,192 @@
     <div class="oj-applayout-content">
         <div role="main" class="oj-hybrid-applayout-content">
             <div class="oj-hybrid-padding">
-                <h3>Incidents Content Area</h3>
-                <div>
-                    To change the content of this section, you will make edits to the incidents.html file located in the /js/views folder.
+                <div class="oj-form-layout oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-lg-odd-cols-2 oj-lg-even-cols-4" id="form-container1">
+                    <div class="oj-flex">
+                        <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">BugNo:</label>
+                    </div>
+                        <div class="oj-flex-item">
+                        <input id="BugNoInput" type="text"
+                               placeholder="123456"
+                               style="max-width: 70%;"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value: 123456,
+                       attr: {
+                           readOnly: readMode}"/>
+
+                    </div>
+                        <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">BugType:</label>
+                    </div>
+                        <div class="oj-flex-item">
+                        <input id="BugTypeInput" type="text"
+                               placeholder="Enhancement Request"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               style="max-width: 70%"
+                               data-bind="
+                   value: 'Enhancement Request',
+                   attr: {
+                       readOnly: readMode}"/>
+                    </div>
+                    </div>
+                    <div class="oj-flex">
+
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Status:</label>
+                    </div>
+                    <div class="oj-flex-item" data-bind="text:status1">
+                        <input id="Status1" type="text"
+                               placeholder="90"
+                               style="max-width: 70%"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value: '90',
+                       attr: {
+                           readOnly: readMode}"/>
+                        </div>
                 </div>
+                    <div class="oj-flex">
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">AssignBy:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="Corwin"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value: 'Corwin',
+                       attr: {
+                           readOnly: readMode}"/>
+                    </div>
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Assignee:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="Joe"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                   value: 'Joe',
+                   attr: {
+                       readOnly: readMode}"/>
+                    </div>
+                </div>
+                    <div class="oj-flex">
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Updated:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="2016.1.1..."
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value: '2016.1.1...',
+                       attr: {
+                           readOnly: readMode}"/>
+                    </div>
+                </div>
+                </div>
+                <div class="oj-form-layout oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-lg-odd-cols-2 oj-lg-even-cols-4" id="form-container2">
+                    <div class="oj-flex">
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Product:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="45"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value:'45',
+                       attr: {
+                           readOnly: readMode}"/>
+                    </div>
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp"></label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="Oracle Forms"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                   value: 'Oracle Forms',
+                   attr: {
+                       readOnly: readMode}"/>
+                    </div>
+                </div>
+                    <div class="oj-flex">
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Component:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="IAP"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value: 'IAP',
+                       attr: {
+                           readOnly: readMode}"/>
+                    </div>
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp"></label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="SQL *Form(Run Form)"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                   value: 'SQL *Form(Run Form)',
+                   attr: {
+                       readOnly: readMode}"/>
+                    </div>
+                </div>
+                <div class="oj-flex">
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Sub Component:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder=""
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value: '',
+                       attr: {
+                           readOnly: readMode}"/>
+                    </div>
+                </div>
+                <div class="oj-flex">
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">PatchNumber:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder="0002"
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                       value:'002',
+                       attr: {
+                           readOnly: readMode}"/>
+                    </div>
+                    <div class="oj-flex-item">
+                        <label for="text-input" class="oj-label-nocomp">Version:</label>
+                    </div>
+                    <div class="oj-flex-item">
+                        <input id="text-input" type="text"
+                               placeholder=""
+                               class="oj-form-control oj-inputtext-nocomp"
+                               data-bind="
+                   value: '',
+                   attr: {
+                       readOnly: readMode}"/>
+                    </div>
+                </div>
+                </div>
+
+
             </div>
         </div>
     </div>
+
+
 </div>

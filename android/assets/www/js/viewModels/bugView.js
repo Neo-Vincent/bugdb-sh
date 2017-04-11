@@ -47,12 +47,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController'],
         // Implement if needed
       };
 
+
       oj.Router.sync().then(
           function() {
              var id = app.router.retrieve();
              app.router.store(null);
           }
        );
+        self.readMode=false;
+        self.status1="AA";
     }
 
     return new BugViewModel();
