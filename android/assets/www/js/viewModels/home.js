@@ -16,7 +16,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
             // Header Config
-
+            self.gotoBugView = function(bugNum){
+                $.ajax(
+                    {
+                        // search bugNum get json data
+                        url: 'searchByNumber.json',
+                        type: 'POST',
+                        data: JSON.stringify({"bugNumber":bugNum}),
+                        success: function (jsonResponse) {
+                            app.router.store(bugNum);
+                            app.currentBugRawData=jsonResponse;
+                            app.router.go("bugView");
+                        }
+                    });
+            };
             self.headerConfig = {
                 'viewName': 'homeHeader',
                 'viewModelFactory': {
@@ -33,11 +46,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                                     value: ui.value
                                 };
                                 previousValue = ui.value;
-
-                                $('#updateEvent').html("<u>Update Event:</u>");
-                                $('#update-changelog').html("Value Change: " + JSON.stringify(valueObj, null, 4));
-                                $('#update-changeTrigger').html("Value Change Trigger: " + ui.optionMetadata.trigger);
-                                $('#update-eventTime').html("Last event fired at: " + eventTime);
+                                self.gotoBugView(previousValue);
                             },
                         };
                         return Promise.resolve(model);
@@ -101,12 +110,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             self.onSelected = function (event, ui) {
                 // Custom logic on selected elements
                 if (ui.option === 'selection') {
-                    // Access selected elements via ui.items
-                    var selectedIdsArray = $.map(ui.items, function (selectedListItem) {
-                        return selectedListItem.id;
-                    });
-                    app.router.store(selectedIdsArray[0]);
-                    app.router.go("bugView");
+                    var bugNum=ui.items[0].id;
+                    self.gotoBugView(bugNum);
                 }
             }
 
