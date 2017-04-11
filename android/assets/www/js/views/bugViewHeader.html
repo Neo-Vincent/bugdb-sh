@@ -6,15 +6,12 @@
 </div>
 <div class="oj-hybrid-applayout-bar-title oj-flex-bar-end">
     <div id="editModeWrapper"
-         data-bind="ojComponent: {component: 'ojButtonset', checked: isEditMode}">
-        <label for="isEditMode">Edit</label>
-        <input type="checkbox" id="isEditMode" value="editMode"/>
+         data-bind="ojComponent: {component: 'ojButtonset'}">
+        <button id= "isEditMode"
+                data-bind="click: buttonClick,
+                       ojComponent: { component: 'ojButton', label: editMode }">
+        </button>
+        <button id="editCancel" data-bind="click: buttonClick, ojComponent: { component: 'ojButton', disabled:true}">Cancel</button>
+        <button id="editApply" data-bind="click: buttonClick, ojComponent: { component: 'ojButton', disabled:true}">Apply</button>
     </div>
-    <div>&nbsp;</div>
-
-    <div>
-        <button id="editCancel" data-bind="click: buttonClick">Cancel</button>
-        <button id="editApply" data-bind="click: buttonClick">Apply</button>
-    </div>
-
 </div>

@@ -6,7 +6,7 @@
 
     <div class="oj-applayout-content">
         <div role="main" class="oj-hybrid-applayout-content">
-            <div class="oj-hybrid-padding">
+            <div class="oj-hybrid-padding" data-bind="rawData:rawData">
                 <div class="oj-form-layout oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-lg-odd-cols-2 oj-lg-even-cols-4"
                      id="form-container1">
                     <div class="oj-flex">
@@ -31,9 +31,8 @@
                                    placeholder="Enhancement Request"
                                    class="oj-form-control oj-inputtext-nocomp"
                                    style="max-width: 70%"
-                                   data-bind="
-                            attr: {
-                            readOnly: readMode}"/>
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode}"/>
                         </div>
                     </div>
                     <div class="oj-flex">
@@ -41,7 +40,7 @@
                         <div class="oj-flex-item">
                             <label for="Status1" class="oj-label-nocomp">Status:</label>
                         </div>
-                        <div class="oj-flex-item" >
+                        <div class="oj-flex-item">
                             <input id="Status1" type="text"
                                    class="oj-form-control oj-inputtext-nocomp"
                                    style="max-width: 30%"
