@@ -84,7 +84,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             this.commentValue2 = ko.observable("Lily    2016-1-2 07:00      Reply@Sam");
             this.commentValue3 = ko.observable("Sam     2016-1-5 21:00      Reply@Lily");
             this.commentValue4 = ko.observable("Emma    2016-1-5 21:05      Reply@Sam");
-            this.commentValue5 = ko.observable("Sam     22016-1-6 09:00     Reply@Emma");
+            this.commentValue5 = ko.observable("Sam     2016-1-6 09:00     Reply@Emma");
             oj.Router.sync().then(
                 function () {
                     self.bugNum = app.router.retrieve();
