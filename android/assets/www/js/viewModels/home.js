@@ -16,23 +16,28 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
             // Header Config
+            console.log(app);
             self.gotoBugView = function(bugNum){
-                console.log(bugNum);
                 $.ajax(
                     {
                         // search bugNum get json data
                         url: 'searchByNumber'+bugNum+'.json',
-                        type: 'POST',
-                        data: JSON.stringify({"bugNumber":bugNum}),
+                        url: 'http://10.191.15.241:7101/SmartBugDBBackEnd/bug/searchByNumber?bugNumber='+bugNum,
+                        type: 'GET',
+                        dataType: 'jsonp',
                         success: function (jsonResponse) {
                             app.router.store(bugNum);
                             app.currentBugRawData=jsonResponse;
+                            for(var i in app.router.states){
+                                if(app.router.states[i]["id"]=="bugView"){
+                                    console.log(app.router.states[i]);
+                                    break;
+                                }
+                            }
                             app.router.go("bugView",{ historyUpdate: 'replace' })
                             .then(
                                 function(result) {
                                     if (result.hasChanged) {
-                                        console.log(result);
-                                        console.log(app);
                                         console.log("Router transitioned to default state.");
                                     }
                                     else {
@@ -62,8 +67,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                                     value: ui.value
                                 };
                                 previousValue = ui.value;
-                                console.log(previousValue);
-                                self.gotoBugView(previousValue);
+                                console.log(previousValue[0]);
+                                self.gotoBugView(previousValue[0]);
                             },
                         };
                         return Promise.resolve(model);
@@ -114,7 +119,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             });
             var mBugList = new BugList();
             var BugCollection = oj.Collection.extend({
-                url: self.serviceURL + "?limit=50",
+                url: self.serviceURL,
                 model: mBugList
             });
 

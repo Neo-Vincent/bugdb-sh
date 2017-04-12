@@ -14,6 +14,48 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.bugNum=0;
             //if(self.rawData==null) return;
             self.readMode = true;
+            self.updateModelToView = function(){
+                if(!self.rawData) return;
+                self.bugNum=self.rawData["bugNumber"];
+                var data=self.rawData;
+                /*
+                 "filed": instance["createUser"]["firstName"] + " " +
+                 instance["createUser"]["lastName"],
+                 "assigned": instance["assignment"]["assignTo"]["firstName"] + " " +
+                 instance["assignment"]["assignTo"]["lastName"],
+                 "type": instance["type"]["name"],
+                 "name": instance["name"],
+                 "createDate": instance["createDate"],
+                 "bugNumber": instance["bugNumber"],
+                 "status": instance["status"]["id"],
+                 "update": instance["lastUpdateDate"]
+                 */
+                $("#BugTypeInput").ojInputText("option","value",data["type"]["name"]);
+                $("#Status1").ojInputNumber("option","value",data["status"]["id"]);
+                self.status1=data["status"]["name"];
+                $("#assignBy").ojInputText("option","value",
+                    data["assignment"]["assignBy"]["firstName"] + " " +
+                    data["assignment"]["assignBy"]["lastName"]
+                );
+                $("#Assignee").ojInputText("option","value",
+                    data["assignment"]["assignBy"]["firstName"] + " " +
+                    data["assignment"]["assignBy"]["lastName"]
+                );
+                $("#Product").ojInputText("option","value",data["product"]["name"]);
+                $("#Component").ojInputText("option","value",data["component"]["name"]);
+                $("#SubComponent").ojInputText("option","value",data["subcomponent"]["name"]);
+                $("#PatchNumber").ojInputText("option","value",data["patch"]["patchNumber"]);
+                $("#Version").ojInputText("option","value",data["version"]["releaseNumber"]);
+                $("#Hardware").ojInputText("option","value",data["environment"]["hardwareV"]["product"]["name"]);
+                $("#Middleware").ojInputText("option","value",data["environment"]["middlewareV"]["product"]["name"]);
+                $("#OperatingSystem").ojInputText("option","value",data["environment"]["osV"]["product"]["name"]);
+                $("#Cloud").ojInputText("option","value",data["environment"]["cloudV"]["product"]["name"]);
+                $("#Application").ojInputText("option","value",data["environment"]["applicationV"]["product"]["name"]);
+            };
+
+            self.updateViewToModel = function(){
+
+            };
             self.editableInputTextIds=["BugTypeInput","assignBy","Assignee","Product","Component",
             "SubComponent","PatchNumber","Version","Hardware","Middleware","OperatingSystem","Cloud",
             "Application"];
@@ -22,6 +64,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                 self.readMode = !isEditMode;
                 for(var item in self.editableInputTextIds){
                     $("#"+self.editableInputTextIds[item]).ojInputText("option","readOnly",self.readMode);
+                }
+                for(var item in self.editableInputNum){
+                    $("#"+self.editableInputNum[item]).ojInputNumber("option","readOnly",self.readMode);
                 }
             };
             // Header Config
@@ -37,7 +82,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                             app.adjustContentPadding();
                         },
                         editMode:"Edit",
-                        isEditMode:false,
+                        isEditMode:false
                     };
                     model.buttonClick= function (data, event) {
                         var id=event.currentTarget.id;
@@ -55,8 +100,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                             }
                             self.modeChanged(this.isEditMode);
                         }
+                        if(id=="editCancel"){
+                            self.updateModelToView();
+                        }
+                        if(id=="editApply"){
+                            self.updateViewToModel();
+                        }
                         return true;
-                    }
+                    };
                     return Promise.resolve(model);
                 }
             };
@@ -89,7 +140,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                 function () {
                     self.bugNum = app.router.retrieve();
                     self.rawData=app.currentBugRawData;
-                    console.log(self.rawData);
+                    self.updateModelToView();
                 }
             );
         }

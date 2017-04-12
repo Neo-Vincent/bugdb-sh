@@ -13,7 +13,7 @@
     </author>
     <content src="index.html" />
     <preference name="loadUrlTimeoutValue" value="700000" />
-    <allow-navigation href="http://10.0.2.2/*" />
+    <allow-navigation href="http://*:*/*" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
