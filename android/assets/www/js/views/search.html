@@ -14,15 +14,29 @@
     </div>
     <!-- This is where your main page content will be loaded -->
     <div class="oj-applayout-content">
-        <div>
-            <label for="inputSearch"></label>
-            <input id="inputSearch" placeholder="Search..."
-                   data-bind="ojComponent: {
+
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div>
+                <label for="inputSearch"></label>
+                <input id="inputSearch" placeholder="Search..."
+                       data-bind="ojComponent: {
           component: 'ojInputSearch',
           update: updateEventHandler,
           rootAttributes: {style:'max-width: 20em'}}">
-        </div>
-        <div role="main" class="oj-hybrid-applayout-content">
+            </div>
+            <div class="oj-flex-item">
+                <label for = "SaveSearch">Recent Search Record:</label>
+                <form id = "SaveForm">
+                    <select id="SaveSearch" data-bind="ojComponent: {component: 'ojSelect',
+                                  value: savesearch,
+                                   rootAttributes: {style:'max-width:20em',
+                           }}">
+                        <!-- ko foreach: savesearchs -->
+                        <option data-bind="value:value, text:label"></option>
+                        <!-- /ko -->
+                    </select>
+                </form>
+            </div>
             <div class="oj-hybrid-padding">
                 <div class="oj-form-layout oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-lg-odd-cols-2 oj-lg-even-cols-4"
                      id="form-container-search-2">
@@ -130,14 +144,39 @@
                         </div>
                     </div>
             </div>
+            <div>
+                <button id= "buttonsearch"
+                        data-bind="click: buttonClick,
+                       ojComponent: { component: 'ojButton', label: 'Search' }">
+                </button>
+            </div>
+            <div>
+                <button id= "buttonsavesearch"
+                        data-bind="click: buttonSaveClick,
+                       ojComponent: { component: 'ojButton', label: 'Save Current'}">
+                </button>
+            </div>
+            <div>
+                <div id="dialogWrapper">
+                    <div style="display:none" id="modalDialog1" title="Modal Dialog"
+                         data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide'}">
+                        <!--<div class="oj-dialog-body">-->
+                            <!--The dialog window can be moved, resized and closed with the 'x' icon.-->
+                            <!--Arbitrary content can be added to the the oj-dialog-body and oj-dialog-footer sections.-->
+                        <!--</div>-->
+                        <div class="oj-dialog-footer">
+                            <button id="okButton" data-bind="ojComponent: {component: 'ojButton', label: 'OK'}"> </button>
+                                    <!--data-bind="click:buttonOkClick,-->
+                        </div>
+                    </div>
+                    <button id="buttonOpener" data-bind = "ojComponent: {component: 'ojButton', label: 'Open Modal Dialog'}"></button>
+
+                    <!--data-bind="click:buttonOpenClick,-->
+
+                </div>
+            </div>
         </div>
 
-        <div>
-            <button id= "buttonsearch"
-                    data-bind="click: buttonClick,
-                       ojComponent: { component: 'ojButton', label: 'Search' }">
-            </button>
-        </div>
     </div>
 
 </div>
