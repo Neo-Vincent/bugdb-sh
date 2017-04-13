@@ -5,7 +5,7 @@
 /*
  * Your customer ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepicker', 'ojs/ojtimezonedata', 'ojs/ojinputtext', 'ojs/ojinputnumber', 'ojs/ojbutton', 'ojs/ojknockout'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepicker', 'ojs/ojtimezonedata', 'ojs/ojinputtext', 'ojs/ojinputnumber', 'ojs/ojbutton', 'ojs/ojknockout','ojs/ojtabs', 'ojs/ojconveyorbelt','ojs/ojselectcombobox'],
     function (oj, ko, $, app) {
 
         function BugViewModel() {
@@ -28,6 +28,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.middleware=ko.observable();
             //if(self.rawData==null) return;
             self.readMode = true;
+            this.val = ko.observableArray(["CH"]);
 
             self.updateModelToView = function(){
                 self.rawData=app.currentBugRawData;
