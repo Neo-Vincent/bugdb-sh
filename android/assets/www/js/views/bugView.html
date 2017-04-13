@@ -106,10 +106,9 @@
                                         <input id="Updated" type="text"
                                                style="max-width: 70%"
                                                class="oj-form-control oj-inputtext-nocomp"
-                                               data-bind="
-                               ojComponent: {
-                               component: 'ojInputDateTime',
-                           readOnly: true}"/>
+                                               data-bind="ojComponent: {component: 'ojInputText',
+                                    readOnly: readMode,
+                                    value:updateTime}"/>
                                     </div>
                                 </div>
                             </div>
@@ -257,29 +256,44 @@
                             </div>
                          </div>
                         <div id = "tabs-2">
+                            <ul id="listview" aria-label="list using array"
+                                data-bind="ojComponent: {component: 'ojListView', data: dataSource, item: {template: 'server_template'}, selectionMode: 'single'}">
+                            </ul>
+                            <script type="text/html" id="server_template">
+                                <li data-bind="attr: {id: $data['name']}">
+                                    <div class="oj-flex" style="font-size: 12px">
+                                        <div class="oj-lg-10 oj-md-10 oj-sm-12">
+                                            <div class="oj-flex row">
+                                                <div class="oj-lg-6 oj-md-3 oj-sm-12">
+                                                    <span class="data" data-bind="text: 'Name: '+name"></span>
+                                                </div>
+                                                <div class="oj-lg-6 oj-md-3 oj-sm-12">
+                                                    <span class="data">Time: <span data-bind="text: time"></span></span>
+                                                </div>
+                                            </div>
+                                            <div class="oj-flex row">
+                                                <div >
+                                                    <span class="data"><b>Comments: </b><span data-bind="text: comment"></span></span>
+                                                    <br></br>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </script>
+                            <div id="div1" class="oj-lg-10 oj-md-10 oj-sm-12 oj-flex">
+                                <label for="resizeBoth" >   Comment Board:</label>
+                                <textarea id="resizeBoth"
+                                          style="resize: both;"
+                                          data-bind="ojComponent: {component: 'ojTextArea',
+                                     value: commentBoard}" ></textarea>
+                                <button id="commentboardbutton" data-bind="click:commentclick,ojComponent: {component: 'ojButton', label: 'Submit'}"> </button>
+
+                            </div>
                             <div class="oj-form-layout oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-lg-odd-cols-2 oj-lg-even-cols-4"
                                  id="form-container4">
-                                <p>Comments: </p>
-                                <textarea id="text-area1"
-                                          data-bind="ojComponent: {component: 'ojTextArea',
-                                     value: commentValue1}">
-                    </textarea>
-                                <textarea id="text-area2"
-                                          data-bind="ojComponent: {component: 'ojTextArea',
-                                     value: commentValue2}">
-                    </textarea>
-                                <textarea id="text-area3"
-                                          data-bind="ojComponent: {component: 'ojTextArea',
-                                     value: commentValue3}">
-                    </textarea>
-                                <textarea id="text-area4"
-                                          data-bind="ojComponent: {component: 'ojTextArea',
-                                     value: commentValue4}">
-                    </textarea>
-                                <textarea id="text-area5"
-                                          data-bind="ojComponent: {component: 'ojTextArea',
-                                     value: commentValue5}">
-                    </textarea>
+
                             </div>
                         </div>
                     </div>
