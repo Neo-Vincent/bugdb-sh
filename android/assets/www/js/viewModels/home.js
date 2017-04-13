@@ -11,19 +11,29 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
         function HomeViewModel() {
             var self = this;
             self.username = "User";
-            self.serviceURL="searchByPerson.json";
-            //self.serviceURL = "http://10.191.8.216:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
+            //self.serviceURL="searchByPerson.json";
+            self.serviceURL = "http://10.191.7.130:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
             // Header Config
-            self.gotoBugView = function(bugNum){
-                $.getJSON('searchByNumber'+bugNum+'.json',
-                    function (jsonResponse) {
+            self.gotoBugView = function (bugNum) {
+                //$.getJSON('searchByNumber'+bugNum+'.json',
+//                $.getJSON(app.baseUrl+"bug/searchByNumber?bugNumber="+bugNum,
+//                    function (jsonResponse) {
+//                        app.router.store(bugNum);
+//                        app.currentBugRawData=jsonResponse;
+//                        app.router.go("bugView");
+//                    });
+                $.ajax({
+                    type: "GET",
+                    url: app.baseUrl + "bug/searchByNumber?bugNumber=" + bugNum,
+                    success: function (jsonResponse) {
                         app.router.store(bugNum);
-                        app.currentBugRawData=jsonResponse;
+                        app.currentBugRawData = jsonResponse;
                         app.router.go("bugView");
-                    });
+                    }
+                });
             };
             self.headerConfig = {
                 'viewName': 'homeHeader',
@@ -105,7 +115,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             self.onSelected = function (event, ui) {
                 // Custom logic on selected elements
                 if (ui.option === 'selection') {
-                    var bugNum=ui.items[0].id;
+                    var bugNum = ui.items[0].id;
                     app.gotoBugView(bugNum);
                 }
             }

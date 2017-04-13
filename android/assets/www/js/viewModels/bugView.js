@@ -32,21 +32,37 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.readMode = true;
 
             self.bugTypes = ko.observableArray();
-            self.status1s = ko.observableArray([
-                {value: '1', label: '6'},
-                {value: '2',  label: '7'},
-                {value: '3',   label: '8'},
-                {value: '4',    label: '9'},
-                {value: '5',   label: '10'}
-            ]);
-            self.priorities= ko.observableArray([
-                {value: '1', label: 'em'},
-                {value: '2',  label: 'ee'},
-                {value: '3',   label: 'ss'},
-                {value: '4',    label: 'kk'},
-                {value: '5',   label: 'sss'}
-            ]);
+            self.status1s = ko.observableArray();
+            self.priorities= ko.observableArray();
+
             self.updateModelToView = function(){
+                $.ajax({
+                    type: "GET",
+                    url: app.baseUrl + "priority/searchAllPriority",
+                    success: function (jsonResponse) {
+                        for(var i in jsonResponse) {
+                            self.priorities.append({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                        }
+                    }
+                });
+                $.ajax({
+                    type: "GET",
+                    url: app.baseUrl + "status/searchAllStatus",
+                    success: function (jsonResponse) {
+                        for(var i in jsonResponse) {
+                            self.status1s.append({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                        }
+                    }
+                });
+                $.ajax({
+                    type: "GET",
+                    url: app.baseUrl + "type/searchAllType",
+                    success: function (jsonResponse) {
+                        for(var i in jsonResponse) {
+                            self.bugTypes.append({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                        }
+                    }
+                });
                 self.rawData=app.currentBugRawData;
                 if(!self.rawData) return;
                 self.bugNum=self.rawData["bugNumber"]
@@ -92,9 +108,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                 data["environment"]["osV"]["product"]["name"]=self.os;
                 data["environment"]["cloudV"]["product"]["name"]=self.cloud;
                 data["environment"]["applicationV"]["product"]["name"]=self.application;
-                $.post(app.baseUrl+"bug/updateBug/",data,function(res){
+
+                /*$.post(app.baseUrl+"bug/updateBug/",JSON.stringify(data),function(res){
                     console.log(res);
-                });
+                },'json');*/
+                console.log(JSON.stringify(data));
+                $.ajax({
+                    type:"POST",
+                    url:app.baseUrl+"bug/updateBug/",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(data),
+                    success:function(res){
+                            console.log(res);
+                    }
+                })
             };
             self.editableInputTextIds=["assignBy","Assignee","Product","Component",
             "SubComponent","PatchNumber","Version","Hardware","Middleware","OperatingSystem","Cloud",
