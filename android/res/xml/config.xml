@@ -11,7 +11,7 @@
     <author email="undefined" href="undefined">
         Oracle Jet Team
     </author>
-    <content src="index.html" />
+    <content src="login.html" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <allow-navigation href="http://*:*/*" />
     <access origin="*" />

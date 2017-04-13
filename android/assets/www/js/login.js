@@ -24,9 +24,11 @@ function checkPassWd(email, passwd) {
     $.ajax(
         {
             type: "GET",
-            url: "http://10.191.8.25:7101/userinfo/userLogin?email="+email+"&passwd="+passwd,
+            url: "http://10.191.4.245:7101/SmartBugDBBackEnd/userinfo/userLogin?email="+email+"&passwd="+passwd,
             success: function (jsonResponse) {
-                if(jsonResponse=="true"){
+                if(jsonResponse=="true" || jsonResponse==true){
+                    localStorage.email=email;
+                    localStorage.passwd=passwd;
                     show_msg('Login ing ....', './index.html');
                 }
                 else{
@@ -36,6 +38,7 @@ function checkPassWd(email, passwd) {
 
             },
             error: function(jsonResponse){
+                console.log(jsonResponse);
                 show_err_msg('Connection Error');
                 $('#password').focus()
             }
@@ -60,7 +63,7 @@ $(function () {
         } else {
             checkPassWd($('#email').val(),$('#password').val());
             //ajax提交表单，#login_form为表单的ID。 如：$('#login_form').ajaxSubmit(function(data) { ... });
-            //
+            //show_msg('Login ing ....', './index.html');
         }
     });
 });

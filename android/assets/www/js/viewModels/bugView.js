@@ -45,7 +45,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                         self.priorities=[];
                         for(var i in jsonResponse) {
                             self.priorities.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
-                            self.priority=data["priority"]["name"];
+                            self.priority(data["priority"]["name"]);
                         }
                     }
                 });

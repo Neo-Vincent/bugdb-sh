@@ -10,9 +10,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
     function (oj, ko, $, app) {
         function HomeViewModel() {
             var self = this;
-            self.username = "User";
+            self.username = localStorage.email;
+            self.passwd= localStorage.passwd;
+            console.log(self.username);
             //self.serviceURL = "searchByPerson.json";
-            self.serviceURL = "http://10.191.7.24:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
+            self.serviceURL = "http://10.191.4.245:7101/SmartBugDBBackEnd/bug/searchByAssignToEmail?email="+self.username;
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
@@ -111,7 +113,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                 for (var i in self.rawData) {
                     var open=0;
                     var close=0;
-                    if (self.rawData[i]["status"]["id"] > 50) {
+                    if (self.rawData[i]["status"]["id"] < 3) {
                         open+=1;
                     }
                     else {
