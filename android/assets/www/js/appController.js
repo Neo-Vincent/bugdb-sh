@@ -22,7 +22,8 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
                 'create': {label: 'Create'},
                 'search': {label: 'Search'},
                 'mybugdb': {label: 'MyBugDB'},
-                'bugView': {label: "bugView"}
+                'bugView': {label: "bugView"},
+                'SearchResult':{label: 'SearchResult'}
             });
 
             oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
