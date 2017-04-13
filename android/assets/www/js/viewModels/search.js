@@ -42,6 +42,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojinputtext','o
       self.regist = ko.observable();
       self.buttonClick = function(data, event){
                console.log(self.firstNameSearch());
+               app.router.go('SearchResult');
       }
 
       self.buttonSaveClick = function(data, event) {

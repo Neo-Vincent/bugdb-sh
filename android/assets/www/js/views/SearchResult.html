@@ -1,0 +1,59 @@
+<!--
+ Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div>
+    <div class="oj-applayout-fixed-top">
+        <!--
+         ** Oracle JET V2.3.0 hybrid mobile application header pattern.
+         ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
+         ** more information on how to use this pattern.
+      -->
+        <header role="banner" class="oj-hybrid-applayout-header" data-bind="ojModule: headerConfig">
+        </header>
+    </div>
+    <!-- This is where your main page content will be loaded -->
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div>
+                    <ul id="listview" aria-label="list using collection" style="height:100%"
+                        data-bind="ojComponent: {component: 'ojListView', data: dataSource, item: {template: 'item_template'}, selectionMode: 'single',optionChange: onSelected, rootAttributes: {style: 'width:100%;overflow-x:hidden'}, scrollPolicy: 'loadMoreOnScroll', scrollPolicyOptions: {fetchSize: 15}}">
+                    </ul>
+                    <script type="text/html" id="item_template">
+                        <li data-bind="attr: {id: bugNumber}">
+                            <div class="oj-flex" style="flex-wrap: nowrap" data-bind="attr: {id: bugNumber}">
+                                <div class="oj-flex-item ">
+                                    <div class="oj-flex-bar">
+                                        <div class="oj-flex-bar-start">
+                                            <div><strong data-bind="text: filed"></strong></div>
+                                            <div><span style="font-size: 13px; color: #696969; margin-left: 10px;" data-bind="text: createDate"></span></div>
+                                        </div>
+                                        <div id="type" style="color: #696969; margin-left: 10px;" class="oj-flex-bar-middle ">
+                                            <div data-bind="text: type"></div>
+                                        </div>
+                                        <div class="oj-flex-bar-end">
+                                            <strong data-bind="text: assigned"></strong>
+                                        </div>
+                                    </div>
+                                    <div class="demo-tweet">
+                                        <span style="word-wrap: break-word" data-bind="text: name"></span>
+                                    </div>
+                                    <div class="oj-flex-bar">
+                                        <div class="oj-flex-bar-start">
+                                            <div data-bind="text:'#'+bugNumber"></div>
+                                            <div> <span style="font-size: 13px; color: #696969; margin-left: 10px;" data-bind="text:'updated at: '+update"></span></div>
+                                        </div>
+                                        <div class="oj-flex-bar-end">
+                                            Status:&nbsp;<strong data-bind="text:status"></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

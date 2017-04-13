@@ -69,29 +69,30 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     }
                 });
             };
-            self.headerConfig = {
-                'viewName': 'homeHeader',
-                'viewModelFactory': {
-                    createViewModel: function (params, valueAccessor) {
-                        var model = {
-                            pageTitle: "Home",
-                            handleBindingsApplied: function (info) {
-                                app.adjustContentPadding();
-                            },
-                            previousValue: null,
-                            updateEventHandler: function (context, ui) {
-                                var valueObj = {
-                                    previousValue: this.previousValue,
-                                    value: ui.value
-                                };
-                                previousValue = ui.value;
-                                self.gotoBugView(previousValue[0]);
-                            },
-                        };
-                        return Promise.resolve(model);
-                    }
-                }
-            };
+            self.headerConfig = {'viewName': 'header', 'viewModelFactory': app.getHeaderModel()};
+//            self.headerConfig = {
+//                'viewName': 'homeHeader',
+//                'viewModelFactory': {
+//                    createViewModel: function (params, valueAccessor) {
+//                        var model = {
+//                            pageTitle: "Search",
+//                            handleBindingsApplied: function (info) {
+//                                app.adjustContentPadding();
+//                            },
+//                            previousValue: null,
+//                            updateEventHandler: function (context, ui) {
+//                                var valueObj = {
+//                                    previousValue: this.previousValue,
+//                                    value: ui.value
+//                                };
+//                                previousValue = ui.value;
+//                                self.gotoBugView(previousValue[0]);
+//                            },
+//                        };
+//                        return Promise.resolve(model);
+//                    }
+//                }
+//            };
 
 
             self.handleActivated = function (params) {
