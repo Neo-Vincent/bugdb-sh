@@ -45,7 +45,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                         self.priorities=[];
                         for(var i in jsonResponse) {
                             self.priorities.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
-                            self.priority(data["priority"]["name"]);
+                            self.priority(data["priority"]["id"]);
                         }
                     }
                 });
@@ -68,7 +68,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                         self.bugTypes=[];
                         for(var i in jsonResponse) {
                             self.bugTypes.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
-                            self.bugType=data["type"]["name"];
+                            self.bugType=data["type"]["id"];
                         }
                     }
                 });
@@ -101,9 +101,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             };
             self.updateViewToModel = function(){
                 var data=self.rawData;
-                data["type"]["name"]=self.bugType;
+                data["type"]["id"]=self.bugType;
                 data["status"]["id"]=self.statusCode;
                 data["status"]["name"]=self.status1;
+                data["priority"]["id"]=self.priority;
                 var asseignBy=self.assignBy.split(" ");
                 data["assignment"]["assignBy"]["firstName"]=asseignBy[0];
                 data["assignment"]["assignBy"]["lastName"]=asseignBy[1];
