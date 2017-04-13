@@ -82,7 +82,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                 self.status1=data["status"]["name"];
                 self.bugType=data["type"]["name"];
                 self.bugNum=self.rawData["bugNumber"];
-
+                self.updateTime=data["lastUpdateDate"];
 
 
                 self.assignBy=
@@ -136,7 +136,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                     success:function(res){
                             console.log(res);
                     }
-                })
+                });
             };
             self.editableInputTextIds=["assignBy","Assignee","Product","Component",
             "SubComponent","PatchNumber","Version","Hardware","Middleware","OperatingSystem","Cloud",
@@ -200,22 +200,49 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.headerConfig = {'viewName': 'bugViewHeader', 'viewModelFactory': headerFactory};
             self.data = [];
             for (var index in self.rawData.commentList){
-                   console.log(index);
                    var a =self.rawData.commentList;
                    var nameA = a[index].commentBy.firstName+a[index].commentBy.lastName;
                    var timeA = a[index].commentDate;
                    var commentA = a[index].details;
                    self.data.push({name: nameA, time: timeA, comment: commentA});
             }
-
-
             self.dataSource=  new oj.ArrayTableDataSource(self.data, {idAttribute: "name"});
             self.commentBoard = ko.observable();
-            self.commentclick = function(data, event) {
+            function GetDateT()
+            {
+                var d,s;
+                d = new Date();
+                s = "";             //取年份
+                s = s + (d.getMonth() + 1) + "-";//取月份
+                s += d.getDate() + " ";         //取日期
+                s += d.getHours() + ":";       //取小时
+                s += d.getMinutes() + ":";    //取分
+                s += d.getSeconds();         //取秒
 
-                this.data.push({name: 'ming he', time: '...', comment: self.commentBoard()});
+                return(s);
+
+            }
+            self.commentclick = function(data, event) {
+                var name=app.currentUser["firstName"]+" "+app.currentUser["lastName"];
+                var date=GetDateT;
+                this.data.push({name: name, time: date, comment: self.commentBoard()});
                 $( "#listview" ).ojListView({ "data": new oj.ArrayTableDataSource(this.data)});
+                var  comment={
+                    commentBy:app.currentUser,
+                    commentDate:date,
+                    details:self.commentBoard(),
+                    bugID:self.rawData["id"]
+                };
                 self.commentBoard = ko.observable("");
+                $.ajax({
+                    type:"POST",
+                    url:app.baseUrl+"comments/createComments/",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(comment),
+                    success:function(res){
+                        console.log(res);
+                    }
+                });
                 //self.dataSource=  new oj.ArrayTableDataSource(self.data, {idAttribute: "name"});
             }
 
