@@ -42,6 +42,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                     type: "GET",
                     url: app.baseUrl + "priority/searchAllPriority",
                     success: function (jsonResponse) {
+                        self.priorities=[];
                         for(var i in jsonResponse) {
                             self.priorities.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
                             self.priority=data["priority"]["name"];
@@ -52,6 +53,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                     type: "GET",
                     url: app.baseUrl + "status/searchAllStatus",
                     success: function (jsonResponse) {
+                        self.status1s=[];
                         for(var i in jsonResponse) {
                             self.status1s.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
                             self.statusCode=data["status"]["id"];
@@ -63,6 +65,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                     type: "GET",
                     url: app.baseUrl + "type/searchAllType",
                     success: function (jsonResponse) {
+                        self.bugTypes=[];
                         for(var i in jsonResponse) {
                             self.bugTypes.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
                             self.bugType=data["type"]["name"];

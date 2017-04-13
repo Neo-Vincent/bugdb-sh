@@ -11,8 +11,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
         function HomeViewModel() {
             var self = this;
             self.username = "User";
-            self.serviceURL = "searchByPerson.json";
-            //self.serviceURL = "http://10.191.2.165:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
+            //self.serviceURL = "searchByPerson.json";
+            self.serviceURL = "http://10.191.7.24:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
