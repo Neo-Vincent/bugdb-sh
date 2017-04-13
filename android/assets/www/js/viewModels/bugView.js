@@ -11,10 +11,26 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
         function BugViewModel() {
             var self = this;
             self.rawData=app.currentBugRawData;
-            self.bugNum=0;
+            self.bugNum=ko.observable();
+            self.bugType=ko.observable();
+            self.statusCode=ko.observable();
+            self.assignBy=ko.observable();
+            self.assignee=ko.observable();
+            self.product=ko.observable();
+            self.component=ko.observable();
+            self.subcomponent=ko.observable();
+            self.patchNumber=ko.observable();
+            self.application=ko.observable();
+            self.cloud=ko.observable();
+            self.os=ko.observable();
+            self.version=ko.observable();
+            self.hardware=ko.observable();
+            self.middleware=ko.observable();
             //if(self.rawData==null) return;
             self.readMode = true;
+
             self.updateModelToView = function(){
+                self.rawData=app.currentBugRawData;
                 if(!self.rawData) return;
                 self.bugNum=self.rawData["bugNumber"];
                 var data=self.rawData;
@@ -30,31 +46,48 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                  "status": instance["status"]["id"],
                  "update": instance["lastUpdateDate"]
                  */
-                $("#BugTypeInput").ojInputText("option","value",data["type"]["name"]);
-                $("#Status1").ojInputNumber("option","value",data["status"]["id"]);
+                self.bugType=data["type"]["name"];
+                self.statusCode=data["status"]["id"];
                 self.status1=data["status"]["name"];
-                $("#assignBy").ojInputText("option","value",
+                self.assignBy=
                     data["assignment"]["assignBy"]["firstName"] + " " +
-                    data["assignment"]["assignBy"]["lastName"]
-                );
-                $("#Assignee").ojInputText("option","value",
+                    data["assignment"]["assignBy"]["lastName"];
+                self.assignee=
                     data["assignment"]["assignBy"]["firstName"] + " " +
-                    data["assignment"]["assignBy"]["lastName"]
-                );
-                $("#Product").ojInputText("option","value",data["product"]["name"]);
-                $("#Component").ojInputText("option","value",data["component"]["name"]);
-                $("#SubComponent").ojInputText("option","value",data["subcomponent"]["name"]);
-                $("#PatchNumber").ojInputText("option","value",data["patch"]["patchNumber"]);
-                $("#Version").ojInputText("option","value",data["version"]["releaseNumber"]);
-                $("#Hardware").ojInputText("option","value",data["environment"]["hardwareV"]["product"]["name"]);
-                $("#Middleware").ojInputText("option","value",data["environment"]["middlewareV"]["product"]["name"]);
-                $("#OperatingSystem").ojInputText("option","value",data["environment"]["osV"]["product"]["name"]);
-                $("#Cloud").ojInputText("option","value",data["environment"]["cloudV"]["product"]["name"]);
-                $("#Application").ojInputText("option","value",data["environment"]["applicationV"]["product"]["name"]);
+                    data["assignment"]["assignBy"]["lastName"];
+                self.product=data["product"]["name"];
+                self.component=data["component"]["name"];
+                self.subcomponent=data["subcomponent"]["name"];
+                self.patchNumber=data["patch"]["patchNumber"];
+                self.version=data["version"]["releaseNumber"];
+                self.hardware=data["environment"]["hardwareV"]["product"]["name"];
+                self.middleware=data["environment"]["middlewareV"]["product"]["name"];
+                self.os=data["environment"]["osV"]["product"]["name"];
+                self.cloud=data["environment"]["cloudV"]["product"]["name"];
+                self.application=data["environment"]["applicationV"]["product"]["name"];
             };
-
             self.updateViewToModel = function(){
-
+                var data=self.rawData;
+                data["type"]["name"]=self.bugType;
+                data["status"]["id"]=self.statusCode;
+                data["status"]["name"]=self.status1;
+                var asseignBy=self.assignBy.split(" ");
+                data["assignment"]["assignBy"]["firstName"]=asseignBy[0];
+                data["assignment"]["assignBy"]["lastName"]=asseignBy[1];
+                var assignee=self.assignee.split(" ");
+                data["assignment"]["assignBy"]["firstName"] = assignee[0];
+                data["assignment"]["assignBy"]["lastName"] = assignee[1];
+                data["product"]["name"]=self.product;
+                data["component"]["name"]=self.component;
+                data["subcomponent"]["name"]=self.subcomponent;
+                data["patch"]["patchNumber"]=self.patchNumber;
+                data["version"]["releaseNumber"]=self.version;
+                data["environment"]["hardwareV"]["product"]["name"]=self.hardware;
+                data["environment"]["middlewareV"]["product"]["name"]=self.middleware;
+                data["environment"]["osV"]["product"]["name"]=self.os;
+                data["environment"]["cloudV"]["product"]["name"]=self.cloud;
+                data["environment"]["applicationV"]["product"]["name"]=self.application;
+                console.log(data);
             };
             self.editableInputTextIds=["BugTypeInput","assignBy","Assignee","Product","Component",
             "SubComponent","PatchNumber","Version","Hardware","Middleware","OperatingSystem","Cloud",

@@ -105,5 +105,6 @@
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="CordovaLib" exported="" />
+    <orderEntry type="library" exported="" name="android-android-24" level="project" />
   </component>
 </module>

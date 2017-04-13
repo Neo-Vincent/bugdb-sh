@@ -23,7 +23,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     {
                         // search bugNum get json data
                         //url: 'searchByNumber'+bugNum+'.json',
-                        url: 'http://10.191.8.216:7101/SmartBugDBBackEnd/bug/searchByNumber?bugNumber='+bugNum,
+                        url: 'http://10.191.15.241:7101/SmartBugDBBackEnd/bug/searchByNumber?bugNumber='+bugNum,
                         type: 'GET',
                         //dataType: 'jsonp',
                         success: function (jsonResponse) {
@@ -31,7 +31,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                             app.currentBugRawData=jsonResponse;
                             for(var i in app.router.states){
                                 if(app.router.states[i]["id"]=="bugView"){
-                                    //console.log(app.router.states[i]);
+                                    var model=app.router.states[i]["viewModel"];
+                                    if(typeof model!="undefined")   model.updateModelToView();
                                     break;
                                 }
                             }
@@ -39,6 +40,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                             .then(
                                 function(result) {
                                     if (result.hasChanged) {
+                                        //app.router.currentState()["viewModel"].updateModelToView();
                                         console.log("Router transitioned to default state.");
                                     }
                                     else {
