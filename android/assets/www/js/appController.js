@@ -9,7 +9,7 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
     function (oj,ko) {
         function ControllerViewModel() {
             var self = this;
-            self.baseUrl="http://10.191.4.245:7101/SmartBugDBBackEnd/";
+            self.baseUrl="http://10.191.3.164:7101/SmartBugDBBackEnd/";
 
             // Save the theme so we can perform platform specific navigational animations
             var platform = oj.ThemeUtils.getThemeTargetPlatform();

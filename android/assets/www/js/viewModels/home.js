@@ -10,11 +10,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
     function (oj, ko, $, app) {
         function HomeViewModel() {
             var self = this;
-            self.username = localStorage.email;
+            app.username = localStorage.email;
             self.passwd= localStorage.passwd;
             console.log(self.username);
             //self.serviceURL = "searchByPerson.json";
-            self.serviceURL = "http://10.191.4.245:7101/SmartBugDBBackEnd/bug/searchByAssignToEmail?email="+self.username;
+            self.serviceURL = "http://10.191.3.164:7101/SmartBugDBBackEnd/bug/searchByAssignToEmail?email="+app.username;
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
@@ -69,6 +69,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     }
                 });
             };
+            app.gotoBugView=self.gotoBugView;
             self.headerConfig = {
                 'viewName': 'homeHeader',
                 'viewModelFactory': {
@@ -149,7 +150,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     "update": instance["lastUpdateDate"]
                 };
                 self.rawData.push(instance);
-                app.currentUser=self.rawData["assignment"]["assignTo"];
+                app.currentUser=instance["assignment"]["assignTo"];
                 self.updateTotalBugs();
                 return item;
             };
