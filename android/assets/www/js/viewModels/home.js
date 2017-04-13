@@ -95,21 +95,21 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
 
 
             self.handleActivated = function (params) {
-
+                self.updateTotalBugs();
             };
 
             self.handleAttached = function (info) {
-                // Implement if needed
+
             };
 
             self.handleBindingsApplied = function (info) {
 
             };
-
+            var openRate = [{name: "Open Bugs", items: [0],label:"Open Bugs"},
+                {name: "Closed Bugs", items: [0],label:"Closed Bugs"}];
             self.totalBugsPieValue = ko.observableArray();
             self.updateTotalBugs = function () {
-                var openRate = [{name: "Open Bugs", items: [0]},
-                    {name: "Closed Bugs", items: [0]}];
+
                 for (var i in self.rawData) {
                     var open=0;
                     var close=0;
@@ -149,6 +149,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     "update": instance["lastUpdateDate"]
                 };
                 self.rawData.push(instance);
+                app.currentUser=self.rawData["assignment"]["assignTo"];
                 self.updateTotalBugs();
                 return item;
             };

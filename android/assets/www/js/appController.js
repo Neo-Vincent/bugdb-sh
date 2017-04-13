@@ -47,10 +47,10 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
                     name: 'Home', id: 'home',
                     iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'
                 },
-                {
-                    name: 'Create', id: 'create',
-                    iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-fire-icon-24'
-                },
+                // {
+                //     name: 'Create', id: 'create',
+                //     iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-fire-icon-24'
+                // },
                 {
                     name: 'Search', id: 'search',
                     iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-people-icon-24'
