@@ -11,11 +11,24 @@
   <div class="oj-applayout-content">
     <div role="main" class="oj-hybrid-applayout-content">
       <div class="oj-hybrid-padding">
+          <ul id="totalBugs" class="oj-flex-item" aria-label="openRate" tabindex="0" >
+            <div id="totalBugsChart" data-bind="ojComponent: {
+                component: 'ojChart',
+                type: 'pie',
+                series: totalBugsPieValue,
+                animationOnDisplay: 'auto',
+                animationOnDataChange: 'auto',
+                hoverBehavior: 'dim',
+                valueFormats: [{type:'value', converter: ko.toJS(converter)},{type:'label', converter: ko.toJS(converter)}],
+                title: {text: 'All Bugs', halign: 'plotAreaCenter'},
+            }"
+                 style="max-width:350px;width:100%;height:350px;">
+            </div>
+          </ul>
 
         <ul id="listview" aria-label="list using collection" style="height:100%"
             data-bind="ojComponent: {component: 'ojListView', data: dataSource, item: {template: 'item_template'}, selectionMode: 'single',optionChange: onSelected, rootAttributes: {style: 'width:100%;overflow-x:hidden'}, scrollPolicy: 'loadMoreOnScroll', scrollPolicyOptions: {fetchSize: 15}}">
         </ul>
-
         <script type="text/html" id="item_template">
           <li data-bind="attr: {id: bugNumber}">
             <div class="oj-flex" style="flex-wrap: nowrap" data-bind="attr: {id: bugNumber}">

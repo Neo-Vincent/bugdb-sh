@@ -6,25 +6,57 @@
  * Your dashboard ViewModel code goes here
  */
 
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', 'promise', 'ojs/ojlistview', 'ojs/ojcollectiontabledatasource', 'ojs/ojmodel', 'ojs/ojselectcombobox'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', 'promise', 'ojs/ojlistview', 'ojs/ojcollectiontabledatasource', 'ojs/ojmodel', 'ojs/ojselectcombobox', 'ojs/ojchart'],
     function (oj, ko, $, app) {
         function HomeViewModel() {
             var self = this;
             self.username = "User";
-            //self.serviceURL="searchByPerson.json";
-            self.serviceURL = "http://10.191.7.130:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
+            self.serviceURL = "searchByPerson.json";
+            //self.serviceURL = "http://10.191.2.165:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
+            var converterFactory = oj.Validation.converterFactory("number");
+            var options = {pattern: '#,##0%'};
+            var converter = converterFactory.createConverter(options);
+            self.converter = ko.observable(converter);
+
+            self.rawData = [];
+            /*
+            $.ajax({
+             type: "GET",
+             url: app.baseUrl + "priority/searchAllPriority",
+             success: function (jsonResponse) {
+             app.priorities=[];
+             for(var i in jsonResponse) {
+             app.priorities.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+             }
+             }
+             });
+             $.ajax({
+             type: "GET",
+             url: app.baseUrl + "status/searchAllStatus",
+             success: function (jsonResponse) {
+             app.status1s=[];
+             for(var i in jsonResponse) {
+             app.status1s.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+             }
+             }
+             });
+             $.ajax({
+             type: "GET",
+             url: app.baseUrl + "type/searchAllType",
+             success: function (jsonResponse) {
+             app.bugTypes=[];
+             for(var i in jsonResponse) {
+             app.bugTypes.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+             }
+             }
+             });*/
             // Header Config
             self.gotoBugView = function (bugNum) {
                 //$.getJSON('searchByNumber'+bugNum+'.json',
-//                $.getJSON(app.baseUrl+"bug/searchByNumber?bugNumber="+bugNum,
-//                    function (jsonResponse) {
-//                        app.router.store(bugNum);
-//                        app.currentBugRawData=jsonResponse;
-//                        app.router.go("bugView");
-//                    });
+                //console.log(bugNum);
                 $.ajax({
                     type: "GET",
                     url: app.baseUrl + "bug/searchByNumber?bugNumber=" + bugNum,
@@ -51,7 +83,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                                     value: ui.value
                                 };
                                 previousValue = ui.value;
-                                app.gotoBugView(previousValue[0]);
+                                self.gotoBugView(previousValue[0]);
                             },
                         };
                         return Promise.resolve(model);
@@ -70,6 +102,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
 
             self.handleBindingsApplied = function (info) {
 
+            };
+
+            self.totalBugsPieValue = ko.observableArray();
+            self.updateTotalBugs = function () {
+                var openRate = [{name: "Open Bugs", items: [0]},
+                    {name: "Closed Bugs", items: [0]}];
+                for (var i in self.rawData) {
+                    var open=0;
+                    var close=0;
+                    if (self.rawData[i]["status"]["id"] > 50) {
+                        open+=1;
+                    }
+                    else {
+                        close+=1;
+                    }
+
+                }
+                openRate[0]["items"]=[open];
+                openRate[1]["items"]=[close];
+                //self.openRatePieValue = ko.observableArray(self.openRate);
+                $("#totalBugsChart").ojChart('option',"series",openRate);
             };
 
             self.fetch = function (successCallBack) {
@@ -93,6 +146,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     "status": instance["status"]["id"],
                     "update": instance["lastUpdateDate"]
                 };
+                self.rawData.push(instance);
+                self.updateTotalBugs();
                 return item;
             };
             var BugList = oj.Model.extend({
@@ -107,7 +162,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             });
 
             self.bugListCol(new BugCollection());
-            self.dataSource(new oj.CollectionTableDataSource(self.bugListCol()))
+            self.dataSource(new oj.CollectionTableDataSource(self.bugListCol()));
+
             self.handleDetached = function (info) {
                 // Implement if needed
             };
@@ -116,7 +172,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                 // Custom logic on selected elements
                 if (ui.option === 'selection') {
                     var bugNum = ui.items[0].id;
-                    app.gotoBugView(bugNum);
+                    for (var i in self.rawData) {
+                        if (self.rawData[i]["bugNumber"] == bugNum) {
+                            app.currentBugRawData = self.rawData[i];
+                            break;
+                        }
+                    }
+                    app.router.go("bugView");
                 }
             }
 

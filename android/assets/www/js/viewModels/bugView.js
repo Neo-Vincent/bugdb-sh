@@ -31,17 +31,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             //if(self.rawData==null) return;
             self.readMode = true;
 
-            self.bugTypes = ko.observableArray();
-            self.status1s = ko.observableArray();
-            self.priorities= ko.observableArray();
+            self.bugTypes = ko.observableArray(app.bugTypes);
+            self.status1s = ko.observableArray(app.status1s);
+            self.priorities= ko.observableArray(app.priorities);
 
             self.updateModelToView = function(){
+                self.rawData=app.currentBugRawData;
+                var data=self.rawData;
                 $.ajax({
                     type: "GET",
                     url: app.baseUrl + "priority/searchAllPriority",
                     success: function (jsonResponse) {
                         for(var i in jsonResponse) {
-                            self.priorities.append({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                            self.priorities.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                            self.priority=data["priority"]["name"];
                         }
                     }
                 });
@@ -50,7 +53,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                     url: app.baseUrl + "status/searchAllStatus",
                     success: function (jsonResponse) {
                         for(var i in jsonResponse) {
-                            self.status1s.append({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                            self.status1s.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                            self.statusCode=data["status"]["id"];
+                            self.status1=data["status"]["name"];
                         }
                     }
                 });
@@ -59,17 +64,21 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                     url: app.baseUrl + "type/searchAllType",
                     success: function (jsonResponse) {
                         for(var i in jsonResponse) {
-                            self.bugTypes.append({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                            self.bugTypes.push({value:jsonResponse[i]["id"],label:jsonResponse[i]["name"]});
+                            self.bugType=data["type"]["name"];
                         }
                     }
                 });
-                self.rawData=app.currentBugRawData;
                 if(!self.rawData) return;
-                self.bugNum=self.rawData["bugNumber"]
-                var data=self.rawData;
-                self.bugType=data["type"]["name"];
+                console.log(self);
+                self.priority=data["priority"]["name"];
                 self.statusCode=data["status"]["id"];
                 self.status1=data["status"]["name"];
+                self.bugType=data["type"]["name"];
+                self.bugNum=self.rawData["bugNumber"];
+
+
+
                 self.assignBy=
                     data["assignment"]["assignBy"]["firstName"] + " " +
                     data["assignment"]["assignBy"]["lastName"];
