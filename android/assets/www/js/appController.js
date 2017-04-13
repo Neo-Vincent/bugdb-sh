@@ -17,8 +17,8 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
             self.router = oj.Router.rootInstance;
 
             self.router.configure({
-                "signin": {label: 'signin', isDefault: true},
-                'home': {label: 'Home'},
+                "signin": {label: 'signin'},
+                'home': {label: 'Home', isDefault: true},
                 'create': {label: 'Create'},
                 'search': {label: 'Search'},
                 'mybugdb': {label: 'MyBugDB'},

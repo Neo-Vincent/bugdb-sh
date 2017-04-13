@@ -158,18 +158,23 @@
             </div>
             <div>
                 <div id="dialogWrapper">
-                    <div style="display:none" id="modalDialog1" title="Modal Dialog"
+                    <div style="display:none" id="modalDialog1" title="Input Name:"
                          data-bind="ojComponent:{component: 'ojDialog', initialVisibility: 'hide'}">
-                        <!--<div class="oj-dialog-body">-->
-                            <!--The dialog window can be moved, resized and closed with the 'x' icon.-->
-                            <!--Arbitrary content can be added to the the oj-dialog-body and oj-dialog-footer sections.-->
-                        <!--</div>-->
+                        <div class="oj-dialog-body">
+                            <label for="inputname">Please input current search name:</label>
+                            <input id="inputname" type="text"
+                                   placeholder=""
+                                   class="oj-form-control oj-inputtext-nocomp"
+                                   style="max-width: 70%"
+                                   data-bind="ojComponent: {component: 'ojInputText',
+                                    value:regist}"/>
+                        </div>
                         <div class="oj-dialog-footer">
-                            <button id="okButton" data-bind="ojComponent: {component: 'ojButton', label: 'OK'}"> </button>
+                            <button id="okButton" data-bind=" click:buttonOkClick,ojComponent: {component: 'ojButton', label: 'OK'}"> </button>
                                     <!--data-bind="click:buttonOkClick,-->
                         </div>
                     </div>
-                    <button id="buttonOpener" data-bind = "ojComponent: {component: 'ojButton', label: 'Open Modal Dialog'}"></button>
+                    <!--<button id="buttonOpener" data-bind = "click:buttonOpenClick,ojComponent: {component: 'ojButton', label: 'Open Modal Dialog'}"></button>-->
 
                     <!--data-bind="click:buttonOpenClick,-->
 

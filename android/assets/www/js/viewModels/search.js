@@ -39,37 +39,39 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojinputtext','o
              app.gotoBugView(ui.value[0]);
        }
 
+      self.regist = ko.observable();
       self.buttonClick = function(data, event){
                console.log(self.firstNameSearch());
       }
 
       self.buttonSaveClick = function(data, event) {
+$("#modalDialog1").ojDialog("open");
 
-            this.reuse.push({"Subject":self.subjectSearch(),
-                     "Firstname": self.firstNameSearch(),
-                     "Lastname" : self.lastNameSearch(),
-                     "Project": self.productsearch(),
-                     "Component": self.componentsearch(),
-                     "Subcomponent": self.subcomponentsearch(),
-                     "name":"BUGBUGBUG"
-                     });
-                console.log(self.reuse[0]);
-            self.savesearchs.push({value:self.reuse.length-1,label:"BUGBUGBUG"});
+
       }
 
-//      self.buttonOkClick = function(data, event) {
-//             console.log("hello");
-//      }
+      self.buttonOkClick = function(data, event) {
+            $("#modalDialog1").ojDialog("close");
+             this.reuse.push({"Subject":self.subjectSearch(),
+                                 "Firstname": self.firstNameSearch(),
+                                 "Lastname" : self.lastNameSearch(),
+                                 "Project": self.productsearch(),
+                                 "Component": self.componentsearch(),
+                                 "Subcomponent": self.subcomponentsearch(),
+                                 "name":"BUGBUGBUG"
+                                 });
+                            console.log(self.reuse[0]);
+                        self.savesearchs.push({value:self.reuse.length-1,label:self.regist()});
+      }
 //      self.buttonOpenClick = function(data, event) {
-//            $("#modalDialog1").ojDialog("close");
-//             console.log("close");
+//            $("#modalDialog1").ojDialog("open");
 //      }
 
-      self.handleOpen = $("#buttonOpener").click(function() {
-             $("#modalDialog1").ojDialog("open"); });
-
-      self.handleOKClose = $("#okButton").click(function() {
-             $("#modalDialog1").ojDialog("close"); });
+//      self.handleOpen = $("#buttonOpener").click(function() {
+//             $("#modalDialog1").ojDialog("open"); });
+//
+//      self.handleOKClose = $("#okButton").click(function() {
+//             $("#modalDialog1").ojDialog("close"); });
 
       // Header Config
       self.headerConfig = {'viewName': 'header', 'viewModelFactory': app.getHeaderModel()};
