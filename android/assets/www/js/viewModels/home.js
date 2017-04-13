@@ -11,7 +11,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
         function HomeViewModel() {
             var self = this;
             self.username = "User";
-            self.serviceURL = "searchByPerson.json";
+
+            self.serviceURL = "http://10.191.8.216:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
@@ -21,8 +22,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                 $.ajax(
                     {
                         // search bugNum get json data
-                        url: 'searchByNumber'+bugNum+'.json',
-                        //url: 'http://10.191.15.241:7101/SmartBugDBBackEnd/bug/searchByNumber?bugNumber='+bugNum,
+                        //url: 'searchByNumber'+bugNum+'.json',
+                        url: 'http://10.191.15.241:7101/SmartBugDBBackEnd/bug/searchByNumber?bugNumber='+bugNum,
                         type: 'GET',
                         //dataType: 'jsonp',
                         success: function (jsonResponse) {
