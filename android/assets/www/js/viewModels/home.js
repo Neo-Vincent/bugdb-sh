@@ -11,47 +11,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
         function HomeViewModel() {
             var self = this;
             self.username = "User";
-
-            self.serviceURL = "http://10.191.8.216:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
+            self.serviceURL="searchByPerson.json";
+            //self.serviceURL = "http://10.191.8.216:7101/SmartBugDBBackEnd/bug/searchByAssignTo?firstName=1_Ora_Org1_Firstname&lastName=1_Ora_Org1_Lastname";
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
             // Header Config
-            console.log(app);
             self.gotoBugView = function(bugNum){
-                $.ajax(
-                    {
-                        // search bugNum get json data
-                        //url: 'searchByNumber'+bugNum+'.json',
-                        url: 'http://10.191.15.241:7101/SmartBugDBBackEnd/bug/searchByNumber?bugNumber='+bugNum,
-                        type: 'GET',
-                        //dataType: 'jsonp',
-                        success: function (jsonResponse) {
-                            app.router.store(bugNum);
-                            app.currentBugRawData=jsonResponse;
-                            for(var i in app.router.states){
-                                if(app.router.states[i]["id"]=="bugView"){
-                                    var model=app.router.states[i]["viewModel"];
-                                    if(typeof model!="undefined")   model.updateModelToView();
-                                    break;
-                                }
-                            }
-                            app.router.go("bugView",{ historyUpdate: 'replace' })
-                            .then(
-                                function(result) {
-                                    if (result.hasChanged) {
-                                        //app.router.currentState()["viewModel"].updateModelToView();
-                                        console.log("Router transitioned to default state.");
-                                    }
-                                    else {
-                                        oj.Logger.info('No transition, Router was already in default state.');
-                                    }
-                                },
-                                function(error) {
-                                    oj.Logger.error('Transition to default state failed: ' + error.message);
-                                }
-                            );
-                        }
+                $.getJSON('searchByNumber'+bugNum+'.json',
+                    function (jsonResponse) {
+                        app.router.store(bugNum);
+                        app.currentBugRawData=jsonResponse;
+                        app.router.go("bugView");
                     });
             };
             self.headerConfig = {
@@ -70,8 +41,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                                     value: ui.value
                                 };
                                 previousValue = ui.value;
-                                console.log(previousValue[0]);
-                                self.gotoBugView(previousValue[0]);
+                                app.gotoBugView(previousValue[0]);
                             },
                         };
                         return Promise.resolve(model);
@@ -136,7 +106,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                 // Custom logic on selected elements
                 if (ui.option === 'selection') {
                     var bugNum=ui.items[0].id;
-                    self.gotoBugView(bugNum);
+                    app.gotoBugView(bugNum);
                 }
             }
 

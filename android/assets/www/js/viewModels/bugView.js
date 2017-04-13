@@ -14,6 +14,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.bugNum=ko.observable();
             self.bugType=ko.observable();
             self.statusCode=ko.observable();
+            self.status1=ko.observable();
+            self.priority=ko.observable();
             self.assignBy=ko.observable();
             self.assignee=ko.observable();
             self.product=ko.observable();
@@ -28,25 +30,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.middleware=ko.observable();
             //if(self.rawData==null) return;
             self.readMode = true;
-            this.val = ko.observableArray(["CH"]);
 
+            self.bugTypes = ko.observableArray();
+            self.status1s = ko.observableArray([
+                {value: '1', label: '6'},
+                {value: '2',  label: '7'},
+                {value: '3',   label: '8'},
+                {value: '4',    label: '9'},
+                {value: '5',   label: '10'}
+            ]);
+            self.priorities= ko.observableArray([
+                {value: '1', label: 'em'},
+                {value: '2',  label: 'ee'},
+                {value: '3',   label: 'ss'},
+                {value: '4',    label: 'kk'},
+                {value: '5',   label: 'sss'}
+            ]);
             self.updateModelToView = function(){
                 self.rawData=app.currentBugRawData;
                 if(!self.rawData) return;
-                self.bugNum=self.rawData["bugNumber"];
+                self.bugNum=self.rawData["bugNumber"]
                 var data=self.rawData;
-                /*
-                 "filed": instance["createUser"]["firstName"] + " " +
-                 instance["createUser"]["lastName"],
-                 "assigned": instance["assignment"]["assignTo"]["firstName"] + " " +
-                 instance["assignment"]["assignTo"]["lastName"],
-                 "type": instance["type"]["name"],
-                 "name": instance["name"],
-                 "createDate": instance["createDate"],
-                 "bugNumber": instance["bugNumber"],
-                 "status": instance["status"]["id"],
-                 "update": instance["lastUpdateDate"]
-                 */
                 self.bugType=data["type"]["name"];
                 self.statusCode=data["status"]["id"];
                 self.status1=data["status"]["name"];
@@ -88,12 +92,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                 data["environment"]["osV"]["product"]["name"]=self.os;
                 data["environment"]["cloudV"]["product"]["name"]=self.cloud;
                 data["environment"]["applicationV"]["product"]["name"]=self.application;
-                console.log(data);
+                $.post(app.baseUrl+"bug/updateBug/",data,function(res){
+                    console.log(res);
+                });
             };
-            self.editableInputTextIds=["BugTypeInput","assignBy","Assignee","Product","Component",
+            self.editableInputTextIds=["assignBy","Assignee","Product","Component",
             "SubComponent","PatchNumber","Version","Hardware","Middleware","OperatingSystem","Cloud",
             "Application"];
-            self.editableInputNum=["Status1"];
+            self.editableInputNum=[];
+            self.editableSelects=["BugTypeInput","Status1","Priority"];
             self.modeChanged = function(isEditMode){
                 self.readMode = !isEditMode;
                 for(var item in self.editableInputTextIds){
@@ -101,6 +108,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
                 }
                 for(var item in self.editableInputNum){
                     $("#"+self.editableInputNum[item]).ojInputNumber("option","readOnly",self.readMode);
+                }
+                for(var item in self.editableSelects){
+                    $("#"+self.editableSelects[item]).ojSelect("option","disabled",self.readMode);
                 }
             };
             // Header Config
@@ -148,7 +158,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.headerConfig = {'viewName': 'bugViewHeader', 'viewModelFactory': headerFactory};
 
             self.handleActivated = function (info) {
-                // Implement if needed
+                self.updateModelToView();
             };
 
             self.handleAttached = function (info) {
@@ -164,7 +174,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             self.handleDetached = function (info) {
                 // Implement if needed
             };
-            self.status1 = "AA";
             this.commentValue1 = ko.observable("Sam     2016-1-1 19:30");
             this.commentValue2 = ko.observable("Lily    2016-1-2 07:00      Reply@Sam");
             this.commentValue3 = ko.observable("Sam     2016-1-5 21:00      Reply@Lily");
@@ -172,7 +181,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojdatetimepick
             this.commentValue5 = ko.observable("Sam     2016-1-6 09:00     Reply@Emma");
             oj.Router.sync().then(
                 function () {
-                    self.bugNum = app.router.retrieve();
                     self.rawData=app.currentBugRawData;
                     self.updateModelToView();
                 }

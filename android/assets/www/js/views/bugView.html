@@ -28,13 +28,13 @@
                                     <div class="oj-flex-item">
                                         <form id = "BugTypeInputForm">
                                             <select id="BugTypeInput" data-bind="ojComponent: {component: 'ojSelect',
-                                                    value: val,
-                                                    rootAttributes: {style:'max-width:20em'}}">
-                                                <option value="IE">Internet Explorer</option>
-                                                <option value="FF">Firefox</option>
-                                                <option value="CH">Chrome</option>
-                                                <option value="OP">Opera</option>
-                                                <option value="SA">Safari</option>
+                                                    value: bugType,
+                                                    disabled:readMode,
+                                                    rootAttributes: {style:'max-width:20em'}
+                                                    }">
+                                                <!-- ko foreach: bugTypes -->
+                                                <option data-bind="value:value, text:label"></option>
+                                                <!-- /ko -->
                                             </select>
                                         </form>
                                     </div>
@@ -46,13 +46,13 @@
                                     <div class="oj-flex-item">
                                         <form id = "Status1Form">
                                             <select id="Status1" data-bind="ojComponent: {component: 'ojSelect',
-                                                    value: val,
-                                                    rootAttributes: {style:'max-width:20em'}}">
-                                                <option value="IE">Internet Explorer</option>
-                                                <option value="FF">Firefox</option>
-                                                <option value="CH">Chrome</option>
-                                                <option value="OP">Opera</option>
-                                                <option value="SA">Safari</option>
+                                                    value: statusCode,
+                                                    disabled:readMode,
+                                                    rootAttributes: {style:'max-width:20em',
+                                                    }}">
+                                                <!-- ko foreach: status1s -->
+                                                <option data-bind="value:value, text:label"></option>
+                                                <!-- /ko -->
                                             </select>
                                         </form>
                                     </div>
@@ -62,13 +62,12 @@
                                     <div class="oj-flex-item">
                                         <form id = "PriorityForm">
                                             <select id="Priority" data-bind="ojComponent: {component: 'ojSelect',
-                                                    value: val,
+                                                    value: priority,
+                                                    disabled:readMode,
                                                     rootAttributes: {style:'max-width:20em'}}">
-                                                <option value="IE">Internet Explorer</option>
-                                                <option value="FF">Firefox</option>
-                                                <option value="CH">Chrome</option>
-                                                <option value="OP">Opera</option>
-                                                <option value="SA">Safari</option>
+                                                <!-- ko foreach: priorities -->
+                                                <option data-bind="value:value, text:label"></option>
+                                                <!-- /ko -->
                                             </select>
                                         </form>
                                     </div>

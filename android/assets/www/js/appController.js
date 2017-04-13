@@ -9,6 +9,7 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
     function (oj,ko) {
         function ControllerViewModel() {
             var self = this;
+            self.baseUrl="";
 
             // Save the theme so we can perform platform specific navigational animations
             var platform = oj.ThemeUtils.getThemeTargetPlatform();
@@ -97,6 +98,15 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
                 // See the override.css file to see when the content area is hidden.
                 contentElem.classList.add('oj-complete');
             }
+
+            self.gotoBugView = function(bugNum){
+                $.getJSON('searchByNumber'+bugNum+'.json',
+                    function (jsonResponse) {
+                        self.router.store(bugNum);
+                        self.currentBugRawData=jsonResponse;
+                        self.router.go("bugView");
+                    });
+            };
         }
 
         return new ControllerViewModel();
