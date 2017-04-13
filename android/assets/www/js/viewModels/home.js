@@ -10,7 +10,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
     function (oj, ko, $, app) {
         function HomeViewModel() {
             var self = this;
-            app.navDataSource = new oj.ArrayTableDataSource(app.navData, {idAttribute: 'id'});
             self.username = "User";
             self.serviceURL = "searchByPerson.json";
             self.Bugs = ko.observableArray([]);

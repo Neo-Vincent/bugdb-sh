@@ -3,24 +3,284 @@
  The Universal Permissive License (UPL), Version 1.0
  -->
 <div>
-  <div class="oj-applayout-fixed-top">
-      <!--
-       ** Oracle JET V2.3.0 hybrid mobile application header pattern.
-       ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
-       ** more information on how to use this pattern.
-    -->
-    <header role="banner" class="oj-hybrid-applayout-header" data-bind="ojModule: headerConfig">
-    </header>
-  </div>
-  <!-- This is where your main page content will be loaded -->
-  <div class="oj-applayout-content">
-    <div role="main" class="oj-hybrid-applayout-content">
-      <div class="oj-hybrid-padding">
-        <h3>Customers Content Area</h3>
-        <div>
-            To change the content of this section, you will make edits to the customers.html file located in the /js/views folder.
-        </div>
-      </div>
+    <div class="oj-applayout-fixed-top">
+        <!--
+         ** Oracle JET V2.3.0 hybrid mobile application header pattern.
+         ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
+         ** more information on how to use this pattern.
+      -->
+        <header role="banner" class="oj-hybrid-applayout-header" data-bind="ojModule: headerConfig">
+        </header>
     </div>
-  </div>
+    <!-- This is where your main page content will be loaded -->
+    <div class="oj-applayout-content">
+        <div role="main" class="oj-hybrid-applayout-content">
+            <div class="oj-hybrid-padding">
+                <div id="searchDemo">
+                    <div id="searchPanel">
+
+                        <div id="selection" style="color: blue"></div>
+                        <br>
+
+                        <label for="inputSearch">Search by Name</label>
+                        <div id="inputSearch" placeholder="Search"
+                             data-bind="ojComponent: {
+          component: 'ojInputSearch',
+          options: suggestions,
+          optionsKeys: {
+            label: 'groupName',
+            value: 'groupId',
+            children: 'items',
+            childKeys: {
+              label: 'firstname',
+              value: 'employee_id'
+            }
+          },
+          optionTemplate: 'optionTemplate',
+          optionChange: search,
+          rootAttributes: {style:'max-width: 25em'}}">
+                            <div class="oj-listbox-header"
+                                 data-bind="ojModule: {
+          viewModelFactory: advancedSearchVMFactory,
+          viewName: 'search/AutoSuggestHeader.tmpl'}">
+                            </div>
+                        </div>
+
+                        <div
+                                data-bind="ojModule: {
+        name: 'search/SearchResultViewModel',
+        viewName: 'search/FilterableResult.tmpl',
+        params: searchResultVMOptions},
+        visible: !advancedSearchVM.isAdvancedSearchVisible()">
+                        </div>
+
+                        <div
+                                data-bind="ojModule: {
+        viewModelFactory: advancedSearchVMFactory,
+        viewName: 'search/QuickAdvancedSearch.tmpl'}">
+                        </div>
+
+                        <div
+                                data-bind="ojModule: {
+        viewModelFactory: advancedSearchVMFactory,
+        name: 'search/AdvancedSearch.tmpl'}">
+                        </div>
+
+                    </div>
+
+                    <!-- Option Template -->
+                    <script type="text/html" id="optionTemplate">
+                        <!-- ko if: !$optionContext.leaf -->
+                        <div>
+                            <span data-bind="text: groupName"></span>
+                            <!-- ko if: $data.totalResults -->
+                            (<a href='#' data-bind="text: totalResults"></a>)
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko if: $optionContext.leaf -->
+                        <!-- ko if: !($optionContext.parent.groupId) -->
+                        <div data-bind="text: label"></div>
+                        <!-- /ko -->
+                        <!-- ko if: $optionContext.parent.groupId -->
+                        <div>
+          <span class="oj-listbox-highlighter-section">
+            <span data-bind="text: firstname"></span>,
+            <span data-bind="text: lastname"></span>
+          </span>
+          <span style="font-size: 0.75rem">
+            <span data-bind="text: department_name"></span> -
+            <span data-bind="text: location_code"></span>
+          </span>
+                        </div>
+                        <!-- /ko -->
+                        <!-- /ko -->
+                    </script>
+
+                    <!-- Result header template for ListView -->
+                    <script type="text/html" id="listViewResultHeaderTemplate">
+                        <div class="oj-flex">
+                            <div class="oj-xl-4 oj-md-4 oj-sm-12 oj-flex-item">
+        <span
+                data-bind="text: ((searchCategory() == 'all' || searchCategory() == '')
+              ? 'EMPLOYEES' : searchCategory()[0].toUpperCase())"/>
+                                <a href="#"
+                                   title="Sort by name"
+                                   data-bind="
+             attr: {class: (getSortOrderForColumn(0) ? 'oj-selected' : '')},
+             click: sortSearchResult(0)">
+          <span
+                  data-bind="
+              attr : {
+                class : 'oj-fwk-icon oj-button-icon oj-end oj-clickable-icon ' +
+                  (!getSortOrderForColumn(0) || getSortOrderForColumn(0).sortOrder == 'desc'
+                  ? 'oj-fwk-icon-arrow-s' : 'oj-fwk-icon-arrow-n')}">
+          </span>
+                                </a>
+                            </div>
+                            <div class="oj-xl-2 oj-md-2 oj-sm-12 oj-flex-item" style="text-align: center;">
+                                <span>COUNTRY</span>
+                                <a href="#"
+                                   title="Sort by location"
+                                   data-bind="
+             attr: {class: (getSortOrderForColumn(1) ? 'oj-selected' : '')},
+             click: sortSearchResult(1)">
+          <span
+                  data-bind="
+              attr : {
+                class : 'oj-fwk-icon oj-button-icon oj-end oj-clickable-icon ' +
+                  (!getSortOrderForColumn(1) || getSortOrderForColumn(1).sortOrder == 'desc'
+                  ? 'oj-fwk-icon-arrow-s' : 'oj-fwk-icon-arrow-n')}">
+          </span>
+                                </a>
+                            </div>
+                            <div class="oj-xl-2 oj-md-2 oj-sm-12 oj-flex-item" style="text-align: center;">
+                                <span>LEVEL</span>
+                                <a href="#"
+                                   title="Sort by level"
+                                   data-bind="
+             attr: {class: (getSortOrderForColumn(2) ? 'oj-selected' : '')},
+             click: sortSearchResult(2)">
+          <span
+                  data-bind="
+              attr : {
+                class : 'oj-fwk-icon oj-button-icon oj-end oj-clickable-icon ' +
+                  (!getSortOrderForColumn(2) || getSortOrderForColumn(2).sortOrder == 'desc'
+                  ? 'oj-fwk-icon-arrow-s' : 'oj-fwk-icon-arrow-n')}">
+          </span>
+                                </a>
+                            </div>
+                            <div class="oj-xl-4 oj-md-4 oj-sm-12 oj-flex-item">
+                            </div>
+                        </div>
+                    </script>
+
+                    <!-- Result header template for GridView -->
+                    <script type="text/html" id="gridViewResultHeaderTemplate">
+                        <div class="oj-flex">
+                            <div class="oj-flex-item">
+        <span
+                data-bind="
+            text: ((searchCategory() == 'all' || searchCategory() == '')
+                ? 'EMPLOYEES'  : searchCategory()[0].toUpperCase())"/>
+                            </div>
+                        </div>
+                    </script>
+
+                    <!-- Result item template for ListView -->
+                    <script type="text/html" id="listViewResultItemTemplate">
+                        <li>
+                            <div class="oj-flex">
+                                <div class="oj-xl-4 oj-md-4 oj-sm-12 oj-flex-item">
+                                    <div style="display: flex;">
+                                        <div>
+                                            <img class="demo-search-person-image"
+                                                 data-bind="attr: {
+                       src: 'images/search/' +
+                         ($data.image ? image : 'default-thumbnail.png'),
+                       alt: firstname + ' ' + lastname + ' image'}"/>
+                                        </div>
+                                        <div>
+                                            <div class="demo-search-person">
+                                                <div class="demo-search-result-listview-name">
+                                                    <span data-bind="text: firstname"/>,
+                                                    <span data-bind="text: lastname"/>
+                                                </div>
+                                                <div class="demo-search-result-listview-org">
+                                                    <span data-bind="text: department_name"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oj-xl-2 oj-md-2 oj-sm-12 oj-flex-item demo-search-result-listview-loc-level">
+                                    <span data-bind="text: location_code"/>
+                                </div>
+                                <div class="oj-xl-2 oj-md-2 oj-sm-12 oj-flex-item demo-search-result-listview-loc-level">
+                                    <span data-bind="text: level"/>
+                                </div>
+                                <div class="oj-xl-4 oj-md-4 oj-sm-12 oj-flex-item oj-md-text-align-end demo-search-result-listview-contact">
+                                    <div>
+                                        <a data-bind="attr: {href: 'mailto:' + email, title: email}">
+                                            <span data-bind="text: email"/>
+              <span
+                      class="demo-search-email-icon demo-search-icon-font oj-button-icon oj-end oj-clickable-icon"
+                      style="padding-left: 20px;"/>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span data-bind="text: phone"/>
+            <span
+                    class="demo-search-phone-icon demo-search-icon-font oj-button-icon oj-end oj-clickable-icon oj-disabled"
+                    style="padding-left: 20px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </script>
+
+                    <!-- Result item template for GridView -->
+                    <script type="text/html" id="gridViewResultItemTemplate">
+                        <li class="demo-search-result-gridView">
+                            <div>
+                                <div class="oj-flex" style="padding-bottom: 10px;">
+                                    <div class="oj-sm-4 oj-sm-4 oj-sm-text-align-end oj-flex-item">
+                                        <img class="demo-search-person-image"
+                                             data-bind="
+                   attr: {
+                     src: 'images/search/' +
+                         ($data.image ? image : 'default-thumbnail.png'),
+                     alt: firstname + ' ' + lastname + ' image'}"/>
+                                    </div>
+                                    <div class="oj-sm-8 oj-flex-item" style="margin-top: 18px;">
+            <span class="demo-search-result-gridview-name">
+              <span data-bind="text: firstname"/>,
+              <span data-bind="text: lastname"/>
+            </span><br>
+            <span class="demo-search-result-gridview-org">
+              <span data-bind="text: department_name"/>,
+              <span data-bind="text: level"/>
+            </span>
+                                    </div>
+                                </div>
+                                <div class="oj-flex demo-search-result-gridview-row">
+                                    <div class="oj-sm-4 oj-sm-text-align-end oj-flex-item">
+                                        <a tabindex="-1"
+                                           data-bind="
+                 attr: {
+                   href: 'mailto:' + email, title: email}">
+                                            <span class="demo-search-email-icon demo-search-icon-font oj-button-icon oj-end oj-clickable-icon"/>
+                                        </a>
+                                    </div>
+                                    <div class="oj-sm-8 oj-flex-item">
+                                        <a data-bind="
+              attr: {
+                href: 'mailto:' + email, title: email},
+              text: email"/>
+                                    </div>
+                                </div>
+                                <div class="oj-flex demo-search-result-gridview-row">
+                                    <div class="oj-sm-4 oj-sm-text-align-end oj-flex-item">
+                                        <span class="demo-search-phone-icon demo-search-icon-font oj-button-icon oj-end oj-clickable-icon oj-disabled"/>
+                                    </div>
+                                    <div class="oj-sm-8 oj-flex-item">
+                                        <span data-bind="text: phone"/>
+                                    </div>
+                                </div>
+                                <div class="oj-flex demo-search-result-gridview-row">
+                                    <div class="oj-sm-4 oj-sm-text-align-end oj-flex-item">
+                                        <span class="demo-search-location-icon demo-search-icon-font oj-button-icon oj-end oj-clickable-icon oj-disabled"/>
+                                    </div>
+                                    <div class="oj-sm-8 oj-flex-item">
+                                        <span data-bind="text: location_code"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

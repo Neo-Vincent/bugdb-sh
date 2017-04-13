@@ -61,7 +61,7 @@ define(['ojs/ojcore','knockout','ojs/ojrouter', 'ojs/ojarraytabledatasource', 'o
             ];
             self.navData = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
             //self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
-            self.navDataSource=ko.observableArray();
+            self.navDataSource=self.navData;
             // Header Setup
             self.getHeaderModel = function () {
                 var headerFactory = {

@@ -1,0 +1,28 @@
+<ul role="presentation" class="oj-flex oj-sm-justify-content-flex-end oj-sm-align-items-center oj-sm-flex-items-initial">
+  <li role="option" class="oj-flex-item demo-search-header-link">
+    <a href="#" data-bind="click: viewAllResults">
+        View All
+    </a>
+  </li>
+  <li role="presentation" class="oj-flex-item" style="margin: 0 5px;">
+    <span role="separator" aria-orientation="vertical" 
+      class="oj-toolbar-separator">
+    </span>
+ </li>
+ <li role="option" class="oj-flex-item">
+   <span aria-label="Advanced Search"
+     data-bind="ojComponent: {component: 'ojButtonset', checked: isAdvanced, chroming: 'half'}">
+     <label data-bind="attr: {for: uniqueId('advancedSearchButton')}">
+       Advanced Search
+     </label>
+     <input type="checkbox"
+        data-bind="attr: {id: uniqueId('advancedSearchButton')},
+                   value: 'advancedSearch',
+                   click: showQuickAdvancedSearch,
+                   ojComponent: {
+                     component: 'ojButton',
+                     icons: {start: 'demo-gear-icon-16 demo-icon-font'},
+                     display: 'icons'}" />
+    </span>
+  </li>
+</ul>

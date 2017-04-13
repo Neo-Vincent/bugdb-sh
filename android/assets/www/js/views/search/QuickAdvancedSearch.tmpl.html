@@ -1,0 +1,152 @@
+<div style="display: none"
+  data-bind="
+    attr: {id: uniqueId('popup')},
+    ojComponent: {
+      component: 'ojPopup',
+      initialFocus: 'none',
+      autoDismiss: 'focusLoss',
+      modality: 'modeless',
+      close: popupCloseHandler}">
+
+  <div role="search">
+
+    <!-- Popup header and toolbar section -->
+    <div class="oj-flex">
+      <div class="oj-flex-item"
+        data-bind="
+            attr: {'aria-hidden': (isAdvanced().length ? 'false' : 'true')}">
+        <h2>Advanced Search</h2>
+      </div>
+      
+      <div class="oj-flex-item oj-flex oj-sm-justify-content-flex-end oj-sm-align-items-center oj-sm-flex-items-initial">
+        <a href="#" data-bind="click: resetQuickAdvancedSearch"
+           class="oj-flex-item demo-search-header-link">Reset</a>
+
+        <span role="separator" aria-orientation="vertical"
+          class="oj-toolbar-separator oj-flex-item" style="margin: 0 5px;">
+        </span>
+
+        <span aria-label="Advanced Search" class="oj-flex-item"
+          data-bind="
+            ojComponent: {component: 'ojButtonset', checked: isAdvanced, chroming: 'half'}">
+          <label data-bind="
+            attr: {for: uniqueId('hideAdvancedSearchButton')}">
+            Advanced Search
+          </label>
+          <input type="checkbox"
+            data-bind="
+              attr: {id: uniqueId('hideAdvancedSearchButton')},
+              value: 'advancedSearch',
+              click: hideQuickAdvancedSearch,
+              ojComponent: {
+                component: 'ojButton',
+                icons: {start:'demo-gear-icon-16 demo-icon-font'},
+                display: 'icons'}" />
+        </span>
+      </div>
+    </div>
+  
+    <div role="alert" class="oj-helper-hidden-accessible"
+      data-bind="attr: {id: uniqueId('addCriteriaAlert')}">
+    </div>
+  
+    <div class="oj-flex">
+      <div class="oj-flex-item">
+        <label data-bind=" attr: {for: uniqueId('advancedSearchKeywords')}">
+          Keywords
+        </label>
+        <input data-bind="
+          attr: {id: uniqueId('advancedSearchKeywords')},
+          ojComponent: {
+            component: 'ojInputText',
+            rootAttributes: {style: 'max-width: 100%'}}">
+      </div>
+    </div>
+  
+    <div class="demo-search-adv-fields"
+      data-bind="attr: {id: uniqueId('searchCriteria-container')}">
+  
+      <div class="oj-helper-hidden-accessible">
+        <label aria-hidden="true"
+          data-bind="attr: {for: uniqueId('searchCriteriaItem-0')},
+                     text: 'Search criteria field 1 of ' + 
+                       noOfSearchCriteriaItems()">
+        </label>
+        <label aria-hidden="true"
+          data-bind="attr: {for: uniqueId('searchCriteriaItem-0-value')},
+                   text: 'Search criteria value 1 of ' + 
+                     noOfSearchCriteriaItems()">
+        </label>
+      </div>
+  
+      <div class="oj-flex oj-sm-align-items-center">
+        <div class="oj-flex-item">
+          <select data-bind="
+            attr: {id: uniqueId('searchCriteriaItem-0'), value: 'any'},
+            ojComponent: {component: 'ojSelect'}">
+              <option data-bind="value: 'any', text: 'Any'"></option>
+              <!-- ko foreach: options.searchFeilds -->
+                <option data-bind="value: id, text: name"></option>
+              <!-- /ko -->
+        </select>
+        </div>
+  
+        <div class="oj-flex-item">
+          <input data-bind="
+              attr: {id: uniqueId('searchCriteriaItem-0-value')},
+              ojComponent: {component: 'ojInputText',
+                rootAttributes: {style: 'max-width: 100%'}}" />
+        </div>
+      </div>
+  
+    </div>
+
+    <div class="oj-flex oj-sm-align-items-center oj-sm-flex-items-initial">
+      <div class="oj-flex-item demo-add-criteria-button">
+        <span class="oj-helper-hidden-accessible" aria-hidden="true"
+          data-bind="attr: {id: uniqueId('addCriteriaDesc')}">
+          Adds a search criteria item </span>
+        <button
+          data-bind="
+              attr: {'aria-describedby': uniqueId('addCriteriaDesc')},
+              ojComponent: {
+                component: 'ojButton', 
+                icons: {start:'demo-search-add-icon demo-search-icon-font'}, 
+                label: 'Add Criteria'},
+                click: addSearchCriteriaItem">
+        </button>
+      </div>
+
+      <div class="oj-flex-item">
+        <a href="#" data-bind="click: showAllAdvancedSearch">Show All</a>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="oj-flex oj-sm-justify-content-flex-end oj-sm-align-items-center oj-sm-flex-items-initial oj-flex-items-pad">
+      <div class="oj-flex-item">
+        <a href="#" data-bind="click: showAllAdvancedSearch">Saved Searches</a>
+
+        <span role="separator"
+          aria-orientation="vertical" class="oj-toolbar-separator">
+        </span>
+
+        <a href="#" data-bind="click: saveQuickAdvancedSearch">Save Search</a>
+      </div>
+
+      <div class="oj-flex-item">
+        <button data-bind="
+          attr: {id: uniqueId('advancedSearch')},
+          ojComponent: {
+            component: 'ojButton',
+            icons: {end:
+              'oj-fwk-icon-magnifier oj-fwk-icon oj-clickable-icon'},
+            label: 'Search', display: 'icons'},
+          click: quickAdvancedSearch">
+        </button>
+      </div>
+    </div>
+  </div>
+  
+</div>

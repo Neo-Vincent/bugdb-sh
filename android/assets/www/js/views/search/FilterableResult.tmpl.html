@@ -1,0 +1,268 @@
+<!-- Search result template. This has the collapsable result filters
+  in left side of the page. Right side displays the search results and
+  results can be displayed in list-view or grid-view. -->
+
+<div class="oj-flex" 
+  data-bind="attr: {id: uniqueId('resultSection')},
+    if: searchModel.resultDataSource()">
+
+  <!-- Collapsable result filters section. This will be displayed when filter
+    toggle button in search result toolbar is checked. --> 
+  <label class="oj-helper-hidden-accessible"
+         aria-hidden="true"
+         data-bind="attr: {for: uniqueId('filtersSection')}">
+    Filters
+  </label>
+  <div class="oj-xl-3 oj-lg-3 oj-md-4 oj-sm-12 oj-flex-item demo-search-filters"
+       role="region"
+       data-bind="if: isFilterPaneVisible().length,
+         visible: isFilterPaneVisible().length,
+         attr: {id: uniqueId('filtersSection')}">
+
+    <span role="alert" class="oj-helper-hidden-accessible">
+      <!-- For screen reader to announce when filters are visible. -->
+      Filters are visible now.
+    </span>
+
+    <!-- Header for filters section -->
+    <h2 class="demo-search-filters-header oj-header-border">
+      <span class="demo-search-filter-icon demo-search-icon-font"></span>
+      Filters
+      <span class="demo-search-filters-clearall-link">
+        <a href="#" data-bind="click: clearAllFilters">
+          Clear All
+        </a>
+      </span>
+    </h2>
+
+    <div>
+
+      <!-- ko foreach: {data: visibleFilters, as: "filter" } -->
+        <div>
+          <label
+            data-bind="attr: {id: $module.uniqueId('filterLabel', filterId)}">
+            <h3 data-bind="text: filterName"></h3>
+          </label>
+          <div
+            data-bind="attr: {
+              id: $module.uniqueId('filter', filterId),
+              'aria-labelledby': $module.uniqueId('filterLabel', filterId),
+              'data-filterId': filterId},
+              ojComponent: {component: 'ojCheckboxset',
+                value: $module.filtersStatus()[filterId],
+                optionChange: $module.applyFilters}">
+            <!-- ko foreach: { data: filterItems, as: "filterItem" } -->
+              <span class="oj-choice-row">
+                <input type="checkbox"
+                  data-bind="attr: {
+                    id: $module.uniqueId('filterOpt', $parent.filterId,
+                      $index()),
+                    name: $module.uniqueId('filter', $parent.filterId),
+                    value: value}">
+                <label
+                  data-bind="attr: {
+                    for: $module.uniqueId('filterOpt', $parent.filterId,
+                      $index())},
+                    text: name + ' (' + totalResults + ')'">
+                </label>
+              </span>
+            <!-- /ko -->
+          </div>
+
+          <!-- ko if: filterItems.length < totalNoOfFilterItems -->
+            <div class="demo-search-filters-showmore-link">
+              <span class="oj-helper-hidden-accessible"
+                    aria-hidden="true"
+                    data-bind="attr: {
+                      id: $module.uniqueId('filterShowMoreLinkDesc', filterId},
+                      text: 'Shows more filter options for ' + filterName">
+              </span>
+              <a href="#"
+                 data-bind="
+                  click: $module.showMoreFilters,
+                  attr: {'aria-describedby': $module.uniqueId(
+                    'filterShowMoreLinkDesc', filterId)}">
+                Show More
+              </a>
+            </div>
+          <!-- /ko -->
+
+          <!-- ko if: $module.activeShowMoreFilterType() == filterId -->
+            <div class="demo-search-filters-showmore-link">
+              <span class="oj-helper-hidden-accessible"
+                    aria-hidden="true"
+                    data-bind="attr: {
+                      id: $module.uniqueId('filterShowLessLinkDesc', filterId},
+                      text: 'Shows less filter options for ' + filterName">
+              </span>
+              <a href="#"
+                 data-bind="
+                   click: $module.showLessFilters,
+                   attr: {'aria-describedby': $module.uniqueId(
+                     'filterShowLessLinkDesc', filterId)}">
+                Show Less
+              </a>
+            </div>
+          <!-- /ko -->
+
+        </div>
+      <!-- /ko -->
+    </div>
+  </div>
+  <!-- End of filters section -->
+
+  <!-- Search result section -->
+  <div data-bind="
+    attr: {class: (isFilterPaneVisible().length ?
+     'oj-xl-9 oj-lg-9 oj-md-8 oj-sm-12 oj-flex-item' : 'oj-sm-12 oj-flex-item')}">
+    <div class="oj-panel">
+
+     <!-- For screen readers to announce the total number of results found -->
+      <span role="alert"
+           class="oj-helper-hidden-accessible"
+           data-bind="attr: {id: uniqueId('resultsAlert')}">
+      </span>
+
+      <label class="oj-helper-hidden-accessible"
+             aria-hidden="true"
+             data-bind="attr: {for: uniqueId('resultsPanel')}">
+        Search Result
+      </label>
+      <div role="region" data-bind="attr: {id: uniqueId('resultsPanel')}">
+
+        <!-- Result header and toolbar -->
+        <div class="oj-flex oj-header-border">
+
+          <!-- Result count -->
+          <div class="oj-md-6 oj-sm-12 oj-flex-item">
+            <h2 class="demo-search-result-count"
+                data-bind="text: 'Search Results ('
+                  + searchModel.totalResults() + ')'">
+            </h2>
+            <span class="demo-search-filter-text"
+               data-bind="text: appliedFiltersText">
+            </span>
+          </div>
+
+          <!-- Show-Filters toggle button -->
+          <div class="oj-md-6 oj-sm-12 oj-md-text-align-end oj-flex-item
+                      demo-search-result-toolbar">
+            <div
+              data-bind="
+                ojComponent: {
+                  component: 'ojButtonset',
+                  checked: isFilterPaneVisible, 
+                  chroming: 'half'}">
+              <label data-bind="attr: {for: uniqueId('toggleFilters')}">
+                Show Filters
+              </label>
+              <input type="checkbox"
+                     data-bind="attr: {
+                       id: uniqueId('toggleFilters'),
+                       'aria-controls': uniqueId('filtersSection')},
+                       value: 'toggleFilters',
+                       ojComponent: {
+                         component: 'ojButton',
+                         icons: {
+                          end:
+                           'demo-search-filter-icon demo-search-icon-font oj-clickable-icon'},
+                         display: 'icons'}" />
+            </div>
+
+            <span role="separator" aria-orientation="vertical"
+                  class="oj-toolbar-separator">
+            </span>
+
+            <!-- Filter by categories -->
+            <!-- ko if: options.resultCategories -->
+              <select aria-label="Search by Category"
+                data-bind="attr: {
+                  id: uniqueId('searchByCategory')},
+                  ojComponent: {component: 'ojSelect',
+                    value: searchCategory,
+                    optionChange: filterByCategory}">
+                <!-- ko foreach: options.resultCategories -->
+                   <option data-bind="value: id, text: name"></option>
+                <!-- /ko -->
+              </select>
+              <span role="separator" aria-orientation="vertical"
+                    class="oj-toolbar-separator">
+              </span>
+            <!-- /ko -->
+
+            <!-- Result layout options -->
+            <div class="oj-buttonset-width-auto"
+              data-bind="attr: {
+                id: uniqueId('resultlayoutOpt')},
+                ojComponent: {
+                   component: 'ojButtonset',
+                   checked: resultLayout, 
+                   chroming: 'half'}">
+              <label data-bind="attr: {for: uniqueId('listView')}">
+                List View
+              </label>
+              <input type="radio"
+                     data-bind="
+                     attr: {id: uniqueId('listView'),
+                       name: uniqueId('resultlayoutOpt')},
+                     value: 'listView',
+                     ojComponent: {
+                       component: 'ojButton',
+                       icons: {start:'demo-list-icon-16 demo-icon-font'},
+                       display: 'icons',
+                       label: 'List View'}" />
+              <label data-bind="attr: {for: uniqueId('gridView')}">
+                Grid View
+              </label>
+              <input type="radio"
+                    data-bind="
+                      attr: {id: uniqueId('gridView'),
+                        name: uniqueId('resultlayoutOpt')},
+                      value: 'gridView',
+                      ojComponent: {
+                        component: 'ojButton',
+                        icons: {start:'demo-grid-icon-16 demo-icon-font'},
+                        display: 'icons',
+                        label: 'Grid View'}" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Result items section. Displays the results in list-view or 
+             grid-view based on selected layout. -->
+        <div>
+          <label class="oj-helper-hidden-accessible"
+                 aria-hidden="true"
+                 data-bind="attr: {for: uniqueId('resultList')}">
+            Result List. Use UP DOWN arrow keys to select result items.
+          </label>
+          <!-- ko if: searchModel.resultDataSource().totalSize() > 0 && resultHeaderTemplate-->
+            <!-- Result List Header -->
+            <div class="demo-search-result-column-header oj-header-border"
+              data-bind="template: {name: resultHeaderTemplate}"></div>
+          <!-- /ko -->    
+          <ul data-bind="attr: {id: uniqueId('resultList')},
+            ojComponent: {
+              component: 'ojListView',
+              data: searchModel.resultDataSource(),
+              item: {template: $module.resultItemTemplate},
+              selectionMode: 'single',
+              optionChange: $module.selectResultItemHandler}">
+          </ul>
+        </div>
+      </div>
+
+      <!-- Result pagination section. -->
+      <div class="oj-flex"
+        data-bind="if: searchModel.totalResults() > 0">
+        <div class="oj-pagingcontrol-table-border oj-pagingcontrol-table-background-color"
+         data-bind="
+          ojComponent: {
+            component: 'ojPagingControl',
+            data : searchModel.resultDataSource(),
+            pageSize: searchModel.options.resultPageSize}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,150 @@
+<!-- Advanced search template which displays the recent/saved searches and 
+     search form where user can add search criteria based on search fields. -->
+<div class="oj-flex oj-flex-items-pad"
+  data-bind="
+       attr: {id: uniqueId('advancedSection')},
+       if: isAdvancedSearchVisible">
+  <div role="alert" class="oj-helper-hidden-accessible">Showing
+    advanced search options.</div>
+
+  <!-- Left section of the page which displays Recent and Saved searches -->
+  <div class="oj-xl-3 oj-lg-3 oj-md-4 oj-sm-12 oj-flex-item">
+
+    <!-- Recent searches list -->
+    <label data-bind="attr: {for: uniqueId('recentSearches')}">
+      <h2 style="padding-top: 12px;">Recent Searches</h2>
+    </label>
+    <ul data-bind="
+      attr: {id: uniqueId('recentSearches')},
+      ojComponent: {
+        component: 'ojListView',
+        data: recentSearches,
+        item: {renderer: searchItemRenderer},
+        selectionMode: 'single',
+        optionChange: recentSearchSelected}">
+    </ul>
+
+    <!-- Saved searches list -->
+    <label data-bind="attr: {for: uniqueId('savedSearches')}">
+      <h2 style="padding-top: 12px;">Saved Searches</h2>
+    </label>
+    <ul data-bind="
+      attr: {id: uniqueId('savedSearches')},
+      ojComponent: {
+        component: 'ojListView',
+        data: savedSearches,
+        item: {renderer: searchItemRenderer},
+        selectionMode: 'single',
+        optionChange: savedSearchSelected}">
+    </ul>
+  </div>
+
+  <!-- Right section of the page which displays advanced search options -->
+  <div class="oj-xl-9 oj-lg-9 oj-md-8 oj-sm-12 oj-flex-item">
+    <form>
+      <div class="oj-panel" role="search">
+        <h2 class="oj-header-border">
+          Advanced Search <span class="demo-search-advanced-search-toolbar">
+            <a href="#" data-bind="click: resetAdvancedSearch">Reset </a>
+  
+            <span role="separator" aria-orientation="vertical"
+              class="oj-toolbar-separator">
+            </span>
+
+            <a href="#" data-bind="click: closeAdvancedSearch">Close</a>
+          </span>
+        </h2>
+  
+        <div class="oj-form oj-md-odd-cols-6">
+          <div class="oj-flex"
+            data-bind="attr: {id: uniqueId('advanced-searchCriteria-container')}">
+  
+            <!-- ko foreach: { data: advancedSearchCriteria, as: "searchCriteria" } -->
+            <div class="oj-flex-item">
+              <label
+                data-bind="
+                    attr: {for: $parent.uniqueId(
+                      'advanced-searchCriteriaItem', $index())},
+                    text: searchCriteria.name"></label>
+              <input
+                data-bind="
+                    attr: {
+                      id: $parent.uniqueId('advanced-searchCriteriaItem', $index()),
+                      value: searchCriteria.value,
+                      'data-search-field': searchCriteria.id},
+                    ojComponent: {component: 'ojInputText',
+                      rootAttributes: {style: 'max-width: 90%'}}">
+            </div>
+            <!-- /ko -->
+  
+          </div>
+        </div>
+  
+        <div class="oj-flex oj-sm-justify-content-flex-end oj-sm-align-items-center oj-sm-flex-items-initial oj-flex-items-pad">
+          <div class="oj-flex-item">
+            <a href="#" data-bind="click: resetAdvancedSearch">Reset</a>
+
+            <span role="separator" aria-orientation="vertical"
+              class="oj-toolbar-separator"></span>
+            
+            <a href="#" data-bind="click: saveAdvancedSearch">Save Search</a>
+          </div>
+
+          <div class="oj-flex-item">
+            <button type="submit"
+              data-bind="ojComponent: {
+                component: 'ojButton',
+                icons: {
+                 end:
+                  'oj-fwk-icon-magnifier oj-fwk-icon oj-clickable-icon'},
+                label: 'Search', display: 'icons'},
+                click: advancedSearch">
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- This is save search dialog -->
+<div style="display: none" title="Create Saved Search"
+  data-bind="
+    attr: {id: uniqueId('saveSearchDialog')},
+    ojComponent:{
+    component: 'ojDialog',
+    initialVisibility: 'hide',
+    height:'auto'}">
+  <form data-bind="visible: !searchModel.isSearchCriteriaEmpty(tobeSavedSearch())">
+    <div class="oj-dialog-body">
+      <label data-bind="attr: {for: uniqueId('savedSearchName')}">
+        Name Saved Search
+      </label>
+      <input type="text"
+        data-bind="
+          attr: {id: uniqueId('savedSearchName')},
+          ojComponent: {
+            component: 'ojInputText',
+            value: searchName}" />
+    </div>
+    <div class="oj-dialog-footer">
+      <button type="submit"
+        data-bind="
+            ojComponent: {
+              component: 'ojButton',
+              label: 'Save'},
+            click: saveSearch">
+      </button>
+      <button data-bind="
+        ojComponent: {
+          component: 'ojButton',
+          label: 'Cancel'},
+          click: cancelSaveSearch">
+      </button>
+    </div>
+  </form>
+  <div class="oj-dialog-body" 
+    data-bind="visible: searchModel.isSearchCriteriaEmpty(tobeSavedSearch())">
+    Search criteria is empty!
+  </div>
+</div>
