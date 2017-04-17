@@ -24,7 +24,7 @@ function checkPassWd(email, passwd) {
     $.ajax(
         {
             type: "GET",
-            url: "http://10.191.3.164:7101/SmartBugDBBackEnd/userinfo/userLogin?email="+email+"&passwd="+passwd,
+            url: "http://10.191.13.154:7101/SmartBugDBBackEnd/userinfo/userLogin?email="+email+"&passwd="+passwd,
             success: function (jsonResponse) {
                 if(jsonResponse=="true" || jsonResponse==true){
                     localStorage.email=email;

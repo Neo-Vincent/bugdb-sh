@@ -14,7 +14,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
             self.passwd= localStorage.passwd;
             console.log(self.username);
             //self.serviceURL = "searchByPerson.json";
-            self.serviceURL = "http://10.191.3.164:7101/SmartBugDBBackEnd/bug/searchByAssignToEmail?email="+app.username;
+            self.serviceURL = "http://10.191.13.154:7101/SmartBugDBBackEnd/bug/searchByAssignToEmail?email="+app.username;
             self.Bugs = ko.observableArray([]);
             self.bugListCol = ko.observable();
             self.dataSource = ko.observable();
@@ -122,8 +122,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojknockout', '
                     }
 
                 }
-                openRate[0]["items"]=[open];
-                openRate[1]["items"]=[close];
+                openRate[0]["items"]=[3];
+                openRate[1]["items"]=[8];
                 //self.openRatePieValue = ko.observableArray(self.openRate);
                 $("#totalBugsChart").ojChart('option',"series",openRate);
             };

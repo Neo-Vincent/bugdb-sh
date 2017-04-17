@@ -41,6 +41,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController','ojs/ojinputtext','o
 
       self.regist = ko.observable();
       self.buttonClick = function(data, event){
+          var url=app.baseUrl+"/"
                console.log(self.firstNameSearch());
                app.router.go('SearchResult');
       }
